@@ -1,0 +1,404 @@
+var express = require('express');
+var router = express.Router();
+var request=require("request");
+var _ = require('underscore')._;
+var properties = require('propertiesmanager').conf;
+var tokenManager = require('tokenmanager');
+var ejs=require('ejs');
+
+
+var authMsUrl  = properties.authUrl;
+var userMsUrl  = properties.userUrl;
+
+
+tokenManager.configure( {
+    "decodedTokenFieldName":"UserToken", // Add token in UserToken field
+    "exampleUrl":authMsUrl,
+    "authorizationMicroserviceUrl":authMsUrl+ "/tokenactions/checkiftokenisauth",
+    "authorizationMicroserviceEncodeTokenUrl":authMsUrl+ "/tokenactions/decodeToken",
+    "authorizationMicroserviceToken":properties.myMicroserviceToken,
+});
+
+
+function renderFooter(callback){
+    ejs.renderFile("./views/caportFooter.ejs",{properties: properties} , null, function(err, str){
+        if(err) {
+            return (callback({
+                status: 400,
+                results: {
+                    error: "BadRequest",
+                    error_message: err
+                }
+            }));
+        }else {
+            return (callback({
+                status: 200,
+                results: {
+                    html: str,
+                    css: properties.commonUIUrl + "/customAssets/css/header_footer.css",
+                    js: properties.commonUIUrl + "/customAssets/js/caportFooter.js"
+                }
+            }));
+        }
+    });
+}
+
+
+function renderHeader(req,callback){
+
+    var renderVar= {
+        homePage : (req.query && req.query.homePage) || properties.defaultHomeRedirect,
+        pageFaq : (req.query && req.query.pageFaq) || ((properties.pageFaq.length>0) && properties.pageFaq ) || null,
+        logout : (req.query && req.query.logout) || null,
+        login : (req.query && req.query.login) || null,
+        isLogged : false,
+        userProfilePage : null,
+        whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) ||null,
+        FastSearchUrl : (req.query && req.query.FastSearchUrl) || true,
+        username:null
+    };
+
+
+    if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
+
+        ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
+            if(err) {
+                return (callback({
+                    status: 400,
+                    results: {
+                        error: "BadRequest",
+                        error_message: err
+                    }
+                }));
+            }else{
+                return callback({
+                    status:200,
+                    results:{
+                        html: str,
+                        css: properties.commonUIUrl + "/customAssets/css/header_footer.css",
+                        js: properties.commonUIUrl + "/customAssets/js/caportHeader.js"
+                    }
+                });
+            }
+        });
+    }else { // get user Logged header
+
+        if(req.UserToken && req.UserToken.error_code) { // no valid access_token return void Header
+            return (callback({
+                status: 400,
+                results: {
+                    error: "BadRequest",
+                    error_message: "Not valid user access_token"
+                }
+            }));
+        }
+        else{ // load custom header
+
+            renderVar.isLogged=true;
+
+            var rqparams = {
+                url:  userMsUrl + '/users/' + req.UserToken.token._id,
+                headers: {'content-type': 'application/json','Authorization': "Bearer " + req.UserToken.access_token},
+            };
+
+            request.get(rqparams, function (error, response, body) {
+                var bodyJson=JSON.parse(body);
+
+                if(response.statusCode==200) {
+                    renderVar.username=bodyJson.email;
+                    renderVar.userProfilePage=properties.userUIUrl+ "?access_token=" + req.UserToken.access_token;
+
+                    ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
+                        if(err){
+                            return (callback({
+                                status: 400,
+                                results: {
+                                    error: "BadRequest",
+                                    error_message: err
+                                }
+                            }));
+                        }else{
+                            return callback({
+                                status:200,
+                                results:{
+                                    html: str,
+                                    css: properties.commonUIUrl + "/customAssets/css/header_footer.css",
+                                    js: properties.commonUIUrl + "/customAssets/js/caportHeader.js"
+                                }
+                            });
+                        }
+                    });
+                }else{ // user Not found
+                    return (callback({
+                        status: 404,
+                        results: {
+                            error: "BadRequest",
+                            error_message: "the owner of this access_token was not found"
+                        }
+                    }));
+                }
+            });
+        }
+
+    }
+}
+
+
+
+router.get('/footer',function(req,res){
+    renderFooter(function(renderResult){
+        res.status(renderResult.status).send(renderResult.results);
+    });
+});
+
+/* GET home page. */
+router.get('/header',tokenManager.checkTokenValidityOnReq, function(req, res) {
+    renderHeader(req,function(renderResult){
+        res.status(renderResult.status).send(renderResult.results);
+    });
+
+});
+
+router.get('/headerAndFooter',tokenManager.checkTokenValidityOnReq, function(req, res) {
+    renderHeader(req,function(renderResult){
+        if(renderResult.status!=200){
+            res.status(renderResult.status).send(renderResult.results);
+        }else{
+            renderFooter(function(renderResultFooter){
+                if(renderResultFooter.status!=200) {
+                    res.status(renderResultFooter.status).send(renderResultFooter.results);
+                }else{
+                    res.status(200).send({
+                       header:renderResult.results,
+                       footer:renderResultFooter.results
+                    });
+                }
+            });
+        }
+    });
+
+});
+
+
+//
+// router.get('/header',tokenManager.checkTokenValidityOnReq, function(req, res) {
+//
+//
+//
+//     // homePage
+//     // pageFaq
+//     // logout
+//     // login
+//     // isLogged
+//     // userProfilePage
+//     // username
+//     // whoWeAre
+//     // FastSearchUrl
+//     //
+//
+//     console.log(req.UserToken);
+//
+//     var renderVar= {
+//         homePage : (req.query && req.query.homePage) || properties.defaultHomeRedirect,
+//         pageFaq : (req.query && req.query.pageFaq) || null,
+//         logout : (req.query && req.query.logout) || null,
+//         login : (req.query && req.query.login) || null,
+//         isLogged : false,
+//         userProfilePage : (req.query && req.query.userProfilePage) || null,
+//         whoWeAre : (req.query && req.query.whoWeAre) || null,
+//         FastSearchUrl : (req.query && req.query.FastSearchUrl) || true
+//     };
+//
+//
+//     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
+//
+//         return res.render('caportHeader', {properties: properties, user: null, error: null,customizations:renderVar});
+//     }
+//     else { // get user Logged header
+//
+//
+//         if(req.UserToken && req.UserToken.error_code) { // no valid access_token return void Header
+//
+//             console.log("Login because not valid Access_token");
+//             return res.render('login', {properties: properties, redirectTo: userWebUiMsUrl});
+//         }
+//         else{ // load custom header
+//
+//             isLogged=true;
+//
+//             var rqparams = {
+//                 url:  userMsUrl + '/users/' + req.UserToken.token._id,
+//                 headers: {'content-type': 'application/json','Authorization': "Bearer " + req.UserToken.access_token},
+//             };
+//
+//             request.get(rqparams, function (error, response, body) {
+//                 var bodyJson=JSON.parse(body);
+//
+//                 if(response.statusCode==200) {
+//                     var username=bodyJson.email;
+//
+//                     return res.render('profile', {properties: properties, user: bodyJson, error: null});
+//                 }
+//                 else{
+//                     return res.render('profile', {properties: properties, user:null ,error:bodyJson});
+//                 }
+//             });
+//
+//             }
+//
+//     }
+// });
+
+
+
+// /* GET home page. */
+// router.get('/index', function(req, res) {
+//     res.render('index', {POST_TITLE:"TITLE",POST_AUTHOR:"Author",POST_CONTENT:"Post Content"});
+// });
+
+// /* GET home page. */
+// router.get('/env', function(req, res) {
+//  var env;
+//  if (process.env['NODE_ENV'] === 'dev')
+//       env='dev';
+//  else
+//       env='production';
+//
+//  res.status(200).send({env:env});
+// });
+//
+// router.get('/main', function(req, res) {
+//     var action=req.signedCookies.action || null;
+//
+//     if(action=="log") {
+//
+//         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//         var gwBaseUrl=conf.getParam("apiGwAuthBaseUrl");
+//         var gwVersion=conf.getParam("apiVersion");
+//         var gwConf=_.isEmpty(gwBaseUrl) ? "" : gwBaseUrl;
+//         gwConf=_.isEmpty(gwVersion) ? gwConf : gwConf + "/" + gwVersion;
+//         var adminToken=req.query.adminToken || null;
+//         res.render('main', {
+//             MicroSL: conf.getParam("microserviceList"),
+//             myUrl: conf.getParam("authProtocol") + "://" + conf.getParam("authHost") + ":" + conf.getParam("authPort") + gwConf,
+//             myToken: conf.getParam("myMicroserviceToken"),
+//             iconsList: iconsList,
+//             adminToken:adminToken
+//         });
+//     }
+//     else {
+//         res.status(401).send({error:"Unauthorized", error_message:"You are not authorized to access this resource"});
+//     }
+// });
+//
+//
+//
+// /* GET home page. */
+// router.get('/configure', function(req, res) {
+//     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//     res.render('start', {read:"No"});
+// });
+//
+//
+//
+// /* GET home page. */
+// router.get('/login', function(req, res) {
+//     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//     var gwBaseUrl=conf.getParam("apiGwAuthBaseUrl");
+//     var gwVersion=conf.getParam("apiVersion");
+//     var gwConf=_.isEmpty(gwBaseUrl) ? "" : gwBaseUrl;
+//     gwConf=_.isEmpty(gwVersion) ? gwConf : gwConf + "/" + gwVersion;
+//     res.render('login', {
+//         next: conf.getParam("authProtocol") + "://" + conf.getParam("authHost") + ":" + conf.getParam("authPort") + gwConf,
+//         at: conf.getParam("myMicroserviceToken")
+//     });
+// });
+//
+// // /* GET home page. */
+// // router.get('/configure', function(req, res) {
+// //
+// // var action=req.signedCookies.action || null;
+// //
+// //  console.log("XXXXXXXXXXXXXXX " + action + " XXXXXXXXXXXXXX");
+// //
+// //  console.log("Rendering " + conf.getParam("msType"));
+// //
+// //
+// //     if(action=="log") {
+// //
+// //         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+// //         res.render('main', {
+// //             MicroSL: conf.getParam("microserviceList"),
+// //             myUrl: conf.getParam("myMicroserviceBaseUrl"),
+// //             myToken: conf.getParam("myMicroserviceToken"),
+// //             iconsList: iconsList
+// //         });
+// //     }
+// //     else {
+// //         //res.cookie("action","log");
+// //         console.log("LOGIN");
+// //         res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+// //         res.render('login', {
+// //             next: conf.getParam("myMicroserviceBaseUrl"),
+// //             at: conf.getParam("myMicroserviceToken")
+// //         });
+// //     }
+// // });
+//
+//
+//
+// /* GET home page. */
+// router.post('/configure', function(req, res) {
+//
+//     var ms = {
+//         "username": req.body.username,
+//         "password": req.body.password
+//     };
+//     var userBody = JSON.stringify(ms);
+//     // console.log("BODY " + userBody);
+//
+//     var gwBaseUrl=conf.getParam("apiGwAuthBaseUrl");
+//     var gwVersion=conf.getParam("apiVersion");
+//     var gwConf=_.isEmpty(gwBaseUrl) ? "" : gwBaseUrl;
+//     gwConf=_.isEmpty(gwVersion) ? gwConf : gwConf + "/" + gwVersion;
+//     request.post({
+//         url: conf.getParam("authProtocol") + "://" + conf.getParam("authHost") + ":" + conf.getParam("authPort") + gwConf + "/authuser/signin",
+//         body: userBody,
+//         headers: {'content-type': 'application/json', 'Authorization': "Bearer " + conf.getParam("myMicroserviceToken")}
+//     }, function (error, response,body) {
+//         console.log(body);
+//         respb=JSON.parse(body);
+//         if (respb.error_message){
+//             res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//             var gwBaseUrl=conf.getParam("apiGwAuthBaseUrl");
+//             var gwVersion=conf.getParam("apiVersion");
+//             var gwConf=_.isEmpty(gwBaseUrl) ? "" : gwBaseUrl;
+//             gwConf=_.isEmpty(gwVersion) ? gwConf : gwConf + "/" + gwVersion;
+//             res.render('login', {
+//                 next: conf.getParam("authProtocol") + "://" + conf.getParam("authHost") + ":" + conf.getParam("authPort") + gwConf,
+//                 at: conf.getParam("myMicroserviceToken"),
+//                 error_message:respb.error_message
+//             });
+//         }
+//         else {
+//             res.cookie("action","log",{ signed: true });
+//             res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//             res.render('start', {read:"Yes", adminToken:respb.apiKey.token});
+//         }
+//     });
+// });
+//
+//
+//
+// /* GET home page. */
+// router.post('/logout', function(req, res) {
+//     res.clearCookie("action");
+//     res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+//     res.render('start', {read:"No"});
+// });
+
+
+
+
+
+module.exports = router;
