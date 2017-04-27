@@ -23,7 +23,7 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery.jgrowl.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/bootstrap-filestyle.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/typeahead.bundle.js');
-    jsList.push(config.commonUIUrl + '/customAssets/js/custom.js');
+    jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
     return jsList;
 }
 
@@ -200,7 +200,7 @@ if(lockScriptLoad){
 //     firstScript=js;
 //
 //     var js = document.createElement('script');
-//     js.src = 'assets/js/custom.js';
+//     js.src = 'assets/js/caportCustom.js';
 //     firstScript.parentNode.insertBefore(js, firstScript.nextSibling);
 //     firstScript=js;
 //
@@ -260,7 +260,7 @@ if(lockScriptLoad){
 //     firstScript=js;
 //
 //     var js = document.createElement('script');
-//     js.src = 'customAssets/js/custom.js';
+//     js.src = 'customAssets/js/caportCustom.js';
 //     firstScript.parentNode.insertBefore(js, firstScript.nextSibling);
 //
 //     console.log("END Load ALL");

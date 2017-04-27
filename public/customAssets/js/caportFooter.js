@@ -10,7 +10,7 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/customAssets/translations/translationHeader.json');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/app.js');
-    jsList.push(config.commonUIUrl + '/customAssets/js/custom.js');
+    jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
     return jsList;
 
     //jsList.push(config.commonUIUrl + '/assets/plugins/smoothScroll.js');

@@ -13,6 +13,7 @@ var FormData = require("form-data");
 var request = require("request");
 var multiparty = require("multiparty");
 var testPage=require('./routes/testComponents');
+var crossOrigin=require('./routes/middlewares').crossOrigin;
 
 var app = express();
 
@@ -59,6 +60,7 @@ app.use(bodyParser.urlencoded({ extended: false, limit: '50mb' }));
 
 //app.use(cookieParser());
 // static files
+app.use(crossOrigin);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/doc', express.static('doc',{root:'doc'}));
 app.use('/node_modules', express.static('node_modules',{root:'node_modules'}));
