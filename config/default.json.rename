@@ -7,7 +7,7 @@
     "userUIUrl":"your_user_webui_url",
     "caportUrl":"your_website_home_url",
     "pageFaq":"",
-    "whoWeAre":"",
+    "whoWeAre":"http://cp2020.crs4.it/",
     "myMicroserviceToken":"your_auth_service_token",
     "defaultHomeRedirect":"your_default_redirect_url"
   },
@@ -20,7 +20,7 @@
     "userUIUrl":"your_user_webui_url",
     "caportUrl":"your_website_home_url",
     "pageFaq":"",
-    "whoWeAre":"",
+    "whoWeAre":"http://cp2020.crs4.it/",
     "myMicroserviceToken":"your_auth_service_token",
     "defaultHomeRedirect":"your_default_redirect_url"
   }

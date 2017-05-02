@@ -25,14 +25,20 @@
                     </ul>
                 </li>
                 <li class="topbar-devider"></li>
-                <li><a href="<%= customizations.pageFaq %>" data-i18n="nav.help">Help</a></li>
-                <li class="topbar-devider"></li>
+                <% if (customizations.pageFaq) { %>
+                    <li><a href="<%= customizations.pageFaq %>" data-i18n="nav.help">Help</a></li>
+                    <li class="topbar-devider"></li>
+                <%}%>
 
                 <% if (customizations.isLogged) { %>
                     <li id="h_logout"><a href="#" onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
                     <li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>
                 <% } else{ %>
-                    <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
+                    <%if(customizations.login){%>
+                        <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
+                    <%}else{%>
+                        <li id="h_login"><a href="<%= properties.userUIUrl %>" data-i18n="nav.login"></a></li>
+                    <%}%>
                 <% }%>
 
             </ul>
@@ -91,6 +97,7 @@
     <script>
         var config=JSON.parse('<%- JSON.stringify(properties) %>');
         console.log(config);
+        var lockScriptLoad=false;
     </script>
 
     <!--To add more script populate it in createScriptList function in caportHeader.js-->

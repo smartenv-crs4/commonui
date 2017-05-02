@@ -6,7 +6,7 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/plugins/jquery/jquery-migrate.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/bootstrap/js/bootstrap.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
-    jsList.push(config.commonUIUrl + '/customAssets/translations/translationHeader.json');
+    jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/back-to-top.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/smoothScroll.js');
@@ -24,6 +24,8 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/js/plugins/bootstrap-filestyle.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/typeahead.bundle.js');
     jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
+    jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery.cookiebar.js');
+
     return jsList;
 }
 
@@ -150,7 +152,7 @@ if(lockScriptLoad){
 //     firstScript=js;
 //
 //     var js = document.createElement('script');
-//     js.src = 'customAssets/translations/translationHeader.json';
+//     js.src = 'customAssets/translations/commonUITranslation.json';
 //     firstScript.parentNode.insertBefore(js, firstScript.nextSibling);
 //     firstScript=js;
 //

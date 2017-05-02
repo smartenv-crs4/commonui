@@ -6,26 +6,20 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/plugins/jquery/jquery-migrate.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/bootstrap/js/bootstrap.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/back-to-top.js');
+    jsList.push(config.commonUIUrl + '/assets/plugins/backstretch/jquery.backstretch.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
     jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
     jsList.push(config.commonUIUrl + '/assets/js/app.js');
     jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
+    jsList.push(config.commonUIUrl + '/assets/js/plugins/style-switcher.js');
+    jsList.push(config.commonUIUrl + '/assets/plugins/respond.js');
+    jsList.push(config.commonUIUrl + '/assets/plugins/html5shiv.js');
+    jsList.push(config.commonUIUrl + '/assets/plugins/placeholder-IE-fixes.js');
+
     return jsList;
 
-    //jsList.push(config.commonUIUrl + '/assets/plugins/smoothScroll.js');
-    //jsList.push(config.commonUIUrl + '/assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/plugins/scrollbar/js/jquery.mCustomScrollbar.concat.min.js');
-    //jsList.push(config.commonUIUrl + '/node_modules/underscore/underscore-min.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/plugins/bootstrap-editable.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/forms/reg.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/forms/checkout.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/plugins/handlebars.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery.jgrowl.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/plugins/bootstrap-filestyle.min.js');
-    //jsList.push(config.commonUIUrl + '/assets/js/plugins/typeahead.bundle.js');
+
 }
 
 //check if script is already loaded and remove it if it's a duplicate
@@ -77,7 +71,7 @@ function initScriptLoad(){
             var event = new Event('headerCanLoadScript');
             dispatchEvent(event);
 
-            initFooter();
+            initErrorPage();
         });
     };
 // finally insert the async.js element to the body element in order to load the script

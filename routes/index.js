@@ -53,7 +53,7 @@ function renderHeader(req,callback){
         login : (req.query && req.query.login) || null,
         isLogged : false,
         userProfilePage : null,
-        whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) ||null,
+        whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) || null,
         FastSearchUrl : (req.query && req.query.FastSearchUrl) || true,
         username:null
     };
@@ -108,6 +108,9 @@ function renderHeader(req,callback){
                     renderVar.username=bodyJson.email;
                     renderVar.userProfilePage=properties.userUIUrl+ "?access_token=" + req.UserToken.access_token;
 
+                    console.log("################################################## is Logged true ");
+                    console.log(renderVar);
+
                     ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
                         if(err){
                             return (callback({
@@ -160,7 +163,10 @@ router.get('/header',tokenManager.checkTokenValidityOnReq, function(req, res) {
 });
 
 router.get('/headerAndFooter',tokenManager.checkTokenValidityOnReq, function(req, res) {
+
+    console.log(req.UserToken);
     renderHeader(req,function(renderResult){
+        console.log(renderResult);
         if(renderResult.status!=200){
             res.status(renderResult.status).send(renderResult.results);
         }else{
@@ -177,6 +183,46 @@ router.get('/headerAndFooter',tokenManager.checkTokenValidityOnReq, function(req
         }
     });
 
+});
+
+
+function renderPageError(req,callback){
+    var error_code= (req.query && req.query.error_code) || 400;
+    var error_message=(req.query && req.query.error_message) || "400";
+    var defaultHomeRedirect=(req.query && req.query.defaultHomeRedirect) || null;
+    var showMore_message=(req.query && req.query.showMore_message) || null;
+
+    var options={error_code:error_code,error_message:error_message,defaultHomeRedirect:defaultHomeRedirect, showMore_message:showMore_message};
+
+
+    ejs.renderFile("./views/caportPageError.ejs",{properties:properties,options:options} , null, function(err, str){
+        if(err) {
+            return callback(500,{
+                error: "InternalError",
+                error_message: err
+            });
+        }else{
+            return callback(200,{
+                html: str,
+                css: properties.commonUIUrl + "/customAssets/css/error_page.css",
+                js: properties.commonUIUrl + "/customAssets/js/caportErrorPage.js"
+            });
+        }
+    });
+};
+
+router.get('/errorBody',function(req,res){
+
+    renderPageError(req,function(statusCode,respBody){
+            return res.status(statusCode).send(respBody);
+    });
+
+});
+
+router.get('/errorPage',function(req,res){
+    renderPageError(req,function(statusCode,respBody){
+        res.render('completeErrorPage',{errorPageCss:respBody.css,errorPageJs:respBody.js,errorPage:respBody.html});
+    });
 });
 
 

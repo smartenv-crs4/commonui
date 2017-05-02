@@ -1,4 +1,4 @@
-
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600&amp;subset=cyrillic,latin);
 @import url(../../assets/plugins/bootstrap/css/bootstrap.min.css);
 @import url(../../customAssets/css/style.css);
 @import url(../../assets/css/headers/header-default.css);
@@ -6,11 +6,8 @@
 @import url(../../assets/plugins/animate.css);
 @import url(../../assets/plugins/line-icons/line-icons.css);
 @import url(../../assets/plugins/font-awesome/css/font-awesome.min.css);
-@import url(../../assets/css/theme-colors/dark-red.css);
-@import url(../../assets/css/jquery.jgrowl.min.css);
-@import url(../../assets/css/pages/page_log_reg_v3.css);
-@import url(../../assets/css/jquery.cookiebar.css);
-
-
-
+@import url(../../assets/css/pages/page_error4_404.css);
+@import url(../../assets/css/theme-colors/default.css);
+@import url(../../assets/css/theme-skins/dark.css);
+@import url(../../assets/css/custom.css);
 

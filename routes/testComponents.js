@@ -43,4 +43,23 @@ router.get('/testHeaderFooter', function(req, res) {
 });
 
 
+router.get('/testError', function(req, res) {
+
+    request.get(properties.commonUIUrl+"/errorbody?error_code=401&error_message=401&defaultHomeRedirect=www.pippo.it&showMore_message=more text...", function (error, response, body) {
+        if(error)console.log("ERRR " + error);
+        body=JSON.parse(body);
+        return res.render("completeErrorPage",{errorPageCss:body.css,errorPageJs:body.js,errorPage:body.html});
+    });
+
+});
+
+
+router.get('/testErrorComplete', function(req, res) {
+
+    request.get(properties.commonUIUrl+"/errorPage?error_code=401&error_message=401&defaultHomeRedirect=www.pippo.it&showMore_message=more text...", function (error, response, body) {
+        return res.send(body);
+    });
+
+});
+
 module.exports = router;

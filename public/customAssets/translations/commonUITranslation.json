@@ -52,7 +52,9 @@ var translation = {
             "buttons": {
                 "send": "Send",
                 "add": "Add",
-                "details": "Details"
+                "details": "Details",
+                "show_more":"Show More",
+                "home_redirect":"Go Back to Main Page"
             },
             "login": {
                 "signUp": "Sign Up",
@@ -335,7 +337,9 @@ var translation = {
             "buttons": {
                 "send": "Invia",
                 "add": "Aggiungi",
-                "details": "Dettagli"
+                "details": "Dettagli",
+                "show_more":"Mostra Ulteriori Dettagli",
+                "home_redirect":"Ritorna alla Home Page"
             },
             "login": {
                 "signUp": "Registrati",
