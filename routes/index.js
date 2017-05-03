@@ -142,7 +142,6 @@ function renderHeader(req,callback){
                 }
             });
         }
-
     }
 }
 
