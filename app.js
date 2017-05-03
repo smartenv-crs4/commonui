@@ -71,15 +71,8 @@ app.use('/test', testPage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    var err = {stausCode:404,error:"Not Found", error_message:"resource not found"};
-    next(err);
+    res.status(404).send({statusCode:404,error:"Not Found", error_message:"resource not found"});
 });
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.stausCode || 500);
-    res.send(err);
-});
 
 module.exports = app;
