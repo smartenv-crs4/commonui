@@ -146,6 +146,17 @@ function renderHeader(req,callback){
 }
 
 
+/* GET home page. */
+router.get('/env', function(req, res) {
+    var env;
+    if (process.env['NODE_ENV'] === 'dev')
+        env='dev';
+    else
+        env='production';
+
+    res.status(200).send({env:env});
+});
+
 
 router.get('/footer',function(req,res){
     renderFooter(function(renderResult){
