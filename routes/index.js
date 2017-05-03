@@ -24,9 +24,9 @@ function renderFooter(callback){
     ejs.renderFile("./views/caportFooter.ejs",{properties: properties} , null, function(err, str){
         if(err) {
             return (callback({
-                status: 400,
+                status: 500,
                 results: {
-                    error: "BadRequest",
+                    error: "Internal Server Error",
                     error_message: err
                 }
             }));
@@ -64,9 +64,9 @@ function renderHeader(req,callback){
         ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
             if(err) {
                 return (callback({
-                    status: 400,
+                    status: 500,
                     results: {
-                        error: "BadRequest",
+                        error: "Internal Server Error",
                         error_message: err
                     }
                 }));
@@ -114,9 +114,9 @@ function renderHeader(req,callback){
                     ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
                         if(err){
                             return (callback({
-                                status: 400,
+                                status: 500,
                                 results: {
-                                    error: "BadRequest",
+                                    error: "Internal Server Error",
                                     error_message: err
                                 }
                             }));
@@ -135,7 +135,7 @@ function renderHeader(req,callback){
                     return (callback({
                         status: 404,
                         results: {
-                            error: "BadRequest",
+                            error: "Resource Not Found",
                             error_message: "the owner of this access_token was not found"
                         }
                     }));
