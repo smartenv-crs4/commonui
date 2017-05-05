@@ -74,5 +74,4 @@ app.use(function(req, res, next) {
     res.status(404).send({statusCode:404,error:"Not Found", error_message:"resource not found"});
 });
 
-
 module.exports = app;
