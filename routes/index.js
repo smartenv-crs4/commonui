@@ -51,6 +51,7 @@ function renderHeader(req,callback){
         pageFaq : (req.query && req.query.pageFaq) || ((properties.pageFaq.length>0) && properties.pageFaq ) || null,
         logout : (req.query && req.query.logout) || null,
         login : (req.query && req.query.login) || null,
+        afterLoginRedirectTo:(req.query && req.query.afterLoginRedirectTo) || null,
         isLogged : false,
         userProfilePage : null,
         whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) || null,
@@ -171,6 +172,15 @@ router.get('/header',tokenManager.checkTokenValidityOnReq, function(req, res) {
     });
 
 });
+
+
+// /* GET home page. */
+// router.get('/languageManager',tokenManager.checkTokenValidityOnReq, function(req, res) {
+//     res.status(200).send({
+//         languagemanager:properties.commonUIUrl + "/customAssets/js/caportLanguageManager.js"
+//     });
+// });
+
 
 router.get('/headerAndFooter',tokenManager.checkTokenValidityOnReq, function(req, res) {
 

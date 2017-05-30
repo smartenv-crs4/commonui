@@ -1,62 +1,35 @@
 
 
+function initTranslation(evenListener){
+    $.ajax({
+        url: config.commonUIUrl + '/customAssets/translations/translation.json',
+        cache: false,
+        type:"get",
+        contentType:"application/json",
+        success: function(data) {
+            initDictionary(data,config.commonUIUrl,evenListener);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log("Json ERROR Ajax");
+            console.log(xhr);
+            console.log(thrownError);
+        }
+
+    });
+}
+
+
 function initErrorPage(){
+
+
+
+
+   initTranslation("errorPageLanguageInitialized");
+
     jQuery(document).ready(function(){
 
         App.init();
         StyleSwitcher.initStyleSwitcher();
-
-        if(localStorage.lng) // if a language is set in a previous page
-        {
-            console.log("language IS SET");
-            var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
-            if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
-            {
-                if(localStorage.lng != jQuery(".languages .active a").first().attr("data-lng")) // if current language != set language then translate and change language
-                {
-                    var lngSel = jQuery(".languages .active").first()
-                    lngSel.empty();
-                    lngSel.append(l[0].cloneNode(true));
-                    var c = document.createElement("i");
-                    c.className = "fa fa-check";
-                    lngSel.find("a").first().append(c);
-                }
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize");
-                jQuery('body').localize();
-            }else{// language selector not exixst
-                localStorage.lng = jQuery(".languages .active a").first().data("lng");
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize No language set");
-                jQuery('body').localize();
-            }
-        }
-        else  //if not a language is set
-        {
-            console.log("language Not SET");
-            //get default language and set it
-            localStorage.lng = jQuery(".languages .active a").first().data("lng");
-            i18next.changeLanguage(localStorage.lng, function(){});
-            console.log("localize No language set");
-            jQuery('body').localize();
-        }
-
-        // on click on language drop down set the language
-        jQuery(".languages a").click(function(){
-            if(jQuery(this).attr("data-lng"))
-            {
-                localStorage.lng = jQuery(this).attr("data-lng");
-                var lngSel = jQuery(".languages .active").first();
-                lngSel.empty();
-                lngSel.append(this.cloneNode(true));
-                var c = document.createElement("i");
-                c.className = "fa fa-check";
-                lngSel.find("a").first().append(c);
-                i18next.changeLanguage(localStorage.lng, function(){});
-                jQuery('body').localize();
-                jQuery(document).trigger('translate');
-            }
-        });
     });
 
     $.backstretch([
@@ -64,24 +37,7 @@ function initErrorPage(){
     ]);
 
 
-    i18next.init({
-        lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-        fallbackLng: "en",
-        resources:  translation
-    }, function (err, t) {
-        console.log("After tanslation init");
-        jqueryI18next.init(i18next, jQuery,
-            {
-                tName: 't', // --> appends $.t = i18next.t
-                i18nName: 'i18n', // --> appends $.i18n = i18next
-                handleName: 'localize', // --> appends $(selector).localize(opts);
-                selectorAttr: 'data-i18n', // selector for translating elements
-                targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
-                optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
-                useOptionsAttr: false, // see optionsAttr
-                parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
-            });
-    });
+
 };
 
 function initFooter(){
@@ -90,81 +46,14 @@ function initFooter(){
     // Get userWebUi Token
     // _access_token =  config.myMicroserviceToken;
 
+
+    initTranslation("footerLanguageInitialized");
+
     jQuery(document).ready(function(){
-
-
         App.init();
-        if(localStorage.lng) // if a language is set in a previous page
-        {
-            var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
-            if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
-            {
-                if(localStorage.lng != jQuery(".languages .active a").first().attr("data-lng")) // if current language != set language then translate and change language
-                {
-                    var lngSel = jQuery(".languages .active").first()
-                    lngSel.empty();
-                    lngSel.append(l[0].cloneNode(true));
-                    var c = document.createElement("i");
-                    c.className = "fa fa-check";
-                    lngSel.find("a").first().append(c);
-                }
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize");
-                jQuery('body').localize();
-            }else{// language selector not exixst
-                localStorage.lng = jQuery(".languages .active a").first().data("lng");
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize No language set");
-                jQuery('body').localize();
-            }
-        }
-        else  //if not a language is set
-        {
-            console.log("language Not SET");
-            //get default language and set it
-            localStorage.lng = jQuery(".languages .active a").first().data("lng");
-            i18next.changeLanguage(localStorage.lng, function(){});
-            console.log("localize No language set");
-            jQuery('body').localize();
-        }
-
-        // on click on language drop down set the language
-        jQuery(".languages a").click(function(){
-            if(jQuery(this).attr("data-lng"))
-            {
-                localStorage.lng = jQuery(this).attr("data-lng");
-                var lngSel = jQuery(".languages .active").first();
-                lngSel.empty();
-                lngSel.append(this.cloneNode(true));
-                var c = document.createElement("i");
-                c.className = "fa fa-check";
-                lngSel.find("a").first().append(c);
-                i18next.changeLanguage(localStorage.lng, function(){});
-                jQuery('body').localize();
-                jQuery(document).trigger('translate');
-            }
-        });
     });
 
 
-    i18next.init({
-        lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-        fallbackLng: "en",
-        resources:  translation
-    }, function (err, t) {
-        console.log("After tanslation init");
-        jqueryI18next.init(i18next, jQuery,
-            {
-                tName: 't', // --> appends $.t = i18next.t
-                i18nName: 'i18n', // --> appends $.i18n = i18next
-                handleName: 'localize', // --> appends $(selector).localize(opts);
-                selectorAttr: 'data-i18n', // selector for translating elements
-                targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
-                optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
-                useOptionsAttr: false, // see optionsAttr
-                parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
-            });
-    });
 
 }
 
@@ -174,85 +63,18 @@ function initHeader(){
     // Get userWebUi Token
     // _access_token =  config.myMicroserviceToken;
 
-    jQuery(document).ready(function(){
 
+
+    initTranslation("headerLanguageInitialized");
+
+    addEventListener('headerLanguageInitialized', function (e) {
+        loadCookieLawBar();
+    }, false);
+
+
+    jQuery(document).ready(function(){
         console.log("Document READY");
         App.init();
-
-        console.log("Language " + localStorage.lng);
-
-        if(localStorage.lng) // if a language is set in a previous page
-        {
-            console.log("language SET");
-            var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
-            if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
-            {
-                if(localStorage.lng != jQuery(".languages .active a").first().attr("data-lng")) // if current language != set language then translate and change language
-                {
-                    var lngSel = jQuery(".languages .active").first()
-                    lngSel.empty();
-                    lngSel.append(l[0].cloneNode(true));
-                    var c = document.createElement("i");
-                    c.className = "fa fa-check";
-                    lngSel.find("a").first().append(c);
-                }
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize");
-                jQuery('body').localize();
-            }else{// language selector not exixst
-                localStorage.lng = jQuery(".languages .active a").first().data("lng");
-                i18next.changeLanguage(localStorage.lng, function(){});
-                console.log("localize No language set");
-                jQuery('body').localize();
-            }
-        }
-        else  //if not a language is set
-        {
-            console.log("language Not SET");
-            //get default language and set it
-            localStorage.lng = jQuery(".languages .active a").first().data("lng");
-            i18next.changeLanguage(localStorage.lng, function(){});
-            console.log("localize No language set");
-            jQuery('body').localize();
-        }
-
-        // on click on language drop down set the language
-        jQuery(".languages a").click(function(){
-            if(jQuery(this).attr("data-lng"))
-            {
-                localStorage.lng = jQuery(this).attr("data-lng");
-                var lngSel = jQuery(".languages .active").first();
-                lngSel.empty();
-                lngSel.append(this.cloneNode(true));
-                var c = document.createElement("i");
-                c.className = "fa fa-check";
-                lngSel.find("a").first().append(c);
-                i18next.changeLanguage(localStorage.lng, function(){});
-                jQuery('body').localize();
-                jQuery(document).trigger('translate');
-            }
-        });
-        loadCookieLawBar();
-    });
-
-    console.log("Before tanslation init");
-    i18next.init({
-        lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-        fallbackLng: "en",
-        resources:  translation
-    }, function (err, t) {
-        console.log("After tanslation init");
-        jqueryI18next.init(i18next, jQuery,
-            {
-                tName: 't', // --> appends $.t = i18next.t
-                i18nName: 'i18n', // --> appends $.i18n = i18next
-                handleName: 'localize', // --> appends $(selector).localize(opts);
-                selectorAttr: 'data-i18n', // selector for translating elements
-                targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
-                optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
-                useOptionsAttr: false, // see optionsAttr
-                parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
-            });
     });
 
 }

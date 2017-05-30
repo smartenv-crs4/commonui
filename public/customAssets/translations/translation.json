@@ -1,0 +1,314 @@
+{
+  "cookieLaw": {
+    "message": {
+      "en": "This website uses session storage, local storage and cookie to store on your browser your preferences and your account information",
+      "it": "Questo sito utilizza il session storage, il local storage e i cookie per salvare sul tuo browser le tue preferenze e le informazioni del tuo account"
+    },
+    "accept": {
+      "en": "I understand",
+      "it": "Ho capito"
+    },
+    "decline": {
+      "en": "I refuse it",
+      "it": "Rifiuto"
+    }
+  },
+  "nav": {
+    "home": {
+      "en": "Home",
+      "it": "Home"
+    },
+    "about": {
+      "en": "About",
+      "it": "Chi siamo"
+    },
+    "help": {
+      "en": "Help",
+      "it": "Aiuto"
+    },
+    "logout": {
+      "en": "Logout",
+      "it": "Esci"
+    },
+    "login": {
+      "en": "Login",
+      "it": "Accedi"
+    },
+    "lang": {
+      "en": "Language",
+      "it": "Lingua"
+    },
+    "services": {
+      "en": "Services",
+      "it": "Servizi"
+    },
+    "contacts": {
+      "en": "Contacts",
+      "it": "Contatti"
+    }
+  },
+  "error": {
+    "400": {
+      "en": "Bad request",
+      "it": "Richiesta non valida"
+    },
+    "401": {
+      "en": "You are not authorized to access this resource",
+      "it": "Non sei autorizzato ad accedere a questa funzione"
+    },
+    "403": {
+      "en": "You are not authorized to access this resource",
+      "it": "Non sei autorizzato ad accedere a questa funzione"
+    },
+    "500": {
+      "en": "Internal server error",
+      "it": "Errore interno del server"
+    },
+    "404": {
+      "en": "Resource Not found",
+      "it": "Risorsa non trovata"
+    },
+    "invalid_access_token": {
+      "en": "Your acccess token is expired or invalid",
+      "it": "Il tuo access token è scaduto o invalido"
+    },
+    "invalid_email": {
+      "en": "Your email address is not valid",
+      "it": "L'indirizzo email inserito non &egrave; valido"
+    },
+    "bad_request": {
+      "en": "Bad Request",
+      "it": "Richiesta non valida"
+    },
+    "missing_user_or_password": {
+      "en": "No username o password provided",
+      "it": "Nome utente o password mancanti"
+    },
+    "unauthorized": {
+      "en": "You are not authorized to call this endpoint",
+      "it": "Non sei autorizzato ad accedere lla risorsa"
+    },
+    "internal_server_error": {
+      "en": "Internal server error",
+      "it": "Errore Interno del Server"
+    },
+    "invalid_auth": {
+      "en": "Invalid email and/or password",
+      "it": "Email e/o password errati"
+    },
+    "password_differs": {
+      "en": "Passwords must be equals",
+      "it": "Le password differiscono"
+    },
+    "void_password": {
+      "en": "Passwords can not be void",
+      "it": "La password non puo essere vuota"
+    }
+  },
+  "homepage": {
+    "des_crs4": {
+      "en": "CRS4 is a private interdisciplinary research center, founded by the Sardinia Autonomous Region.",
+      "it": "Il CRS4 è un centro di ricerca interdisciplinare privato fondato dalla Regione Autonoma della Sardegna."
+    },
+    "useflink": {
+      "en": "Useful Links",
+      "it": "Links utili"
+    },
+    "aboutus": {
+      "en": "About us",
+      "it": "Chi siamo"
+    },
+    "site": {
+      "en": "Site",
+      "it": "Sito"
+    }
+  },
+  "buttons": {
+    "show_more": {
+      "en": "Show More",
+      "it": "Mostra Ulteriori Dettagli"
+    },
+    "home_redirect": {
+      "en": "Go Back to Main Page",
+      "it": "Ritorna alla Home Page"
+    },
+    "search": {
+      "en": "Search",
+      "it": "Cerca"
+    }
+  },
+  "login": {
+    "signUp": {
+      "en": "Sign Up",
+      "it": "Registrati"
+    },
+    "signIn": {
+      "en": "Sign In",
+      "it": "Accedi"
+    },
+    "yourEmail": {
+      "en": "Your email",
+      "it": "Il tuo indirizzo email"
+    },
+    "yourName": {
+      "en": "Your name",
+      "it": "Il tuo nome"
+    },
+    "password": {
+      "en": "Password",
+      "it": "Password"
+    },
+    "choosePassword": {
+      "en": "Choose password",
+      "it": "Scegli una password"
+    },
+    "retypePassword": {
+      "en": "Retype password",
+      "it": "Conferma password"
+    },
+    "forgetpassword": {
+      "en": "Forget your Password ?",
+      "it": "Hai dimenticato la Password ?"
+    },
+    "noworries": {
+      "en": "no worries, to reset your password",
+      "it": "non preoccuparti, per reimpostare la tua password"
+    },
+    "clickhere": {
+      "en": "click here",
+      "it": "clicca qui"
+    }
+  },
+  "profile": {
+    "email": {
+      "en": "Email",
+      "it": "Email"
+    },
+    "type": {
+      "en": "Account type",
+      "it": "Tipo di account"
+    },
+    "Name": {
+      "en": "Name",
+      "it": "Nome"
+    },
+    "Surname": {
+      "en": "surname",
+      "it": "Cognome"
+    },
+    "ckanApiKey": {
+      "en": "ckan Api Key",
+      "it": "chiave ckan"
+    },
+    "phone": {
+      "en": "Telephone number",
+      "it": "Numero di telefono"
+    },
+    "avatar": {
+      "en": "Image",
+      "it": "Logo"
+    },
+    "pIva": {
+      "en": "VATIN",
+      "it": "Partita IVA"
+    },
+    "profile": {
+      "en": "Profile",
+      "it": "Profilo"
+    },
+    "photo": {
+      "en": "Update profile image",
+      "it": "Aggiorna immagine del profilo"
+    },
+    "passwordTitle": {
+      "en": "Manage your password",
+      "it": "Gestisci la tua password"
+    },
+    "passwordTitle2": {
+      "en": "Below you can change your password",
+      "it": "Qui puoi cambiare la tua password"
+    },
+    "editPassword": {
+      "en": "Change Password",
+      "it": "Cambia la password"
+    },
+    "oldPasswordPlaceholder": {
+      "en": "Your current password",
+      "it": "La tua password attuale"
+    },
+    "newPasswordPlaceholder": {
+      "en": "New password",
+      "it": "Inserisci la nuova password"
+    },
+    "newPassword2Placeholder": {
+      "en": "Retype the new password",
+      "it": "Conferma la nuova password"
+    },
+    "passwordSaved": {
+      "en": "Your password has been updated successfully",
+      "it": "La tua password è stata aggiornata correttamente"
+    },
+    "avatarSaved": {
+      "en": "Image profile saved",
+      "it": "Immagine del profilo salvata"
+    },
+    "title": {
+      "en": "Manage your profile information",
+      "it": "Gestisci le informazioni del tuo profilo"
+    },
+    "edit": {
+      "en": "Edit profile",
+      "it": "Modifica il profilo"
+    },
+    "saved": {
+      "en": "Your profile has been successfully updated",
+      "it": "Il tuo profilo è stato aggiornato correttamente"
+    },
+    "emptyText": {
+      "en": "Empty",
+      "it": "Vuoto"
+    },
+    "cancel": {
+      "en": "Cancel",
+      "it": "Annulla"
+    },
+    "save": {
+      "en": "Save",
+      "it": "Salva"
+    },
+    "resetpasswordtitle": {
+      "en": "Reset Your Password",
+      "it": "Recupera la tua Password"
+    },
+    "resetpasswordmessage": {
+      "en": "Type your username used in signUp process",
+      "it": "inserisci il tuo nome utente usato per la registrazione"
+    },
+    "emailplaceholder": {
+      "en": "username",
+      "it": "nome utente"
+    },
+    "resetemailmessage": {
+      "en": "We have been sent an email with instructions to change your password.",
+      "it": "Ti abbiamo spedito una email con le istruzioni per cambiare la password."
+    }
+  },
+  "pagination": {
+    "next": {
+      "en": "Next",
+      "it": "Prossima"
+    },
+    "prev": {
+      "en": "Prev",
+      "it": "Precedente"
+    },
+    "last": {
+      "en": "Last",
+      "it": "Ultima"
+    },
+    "first": {
+      "en": "First",
+      "it": "Prima"
+    }
+  }
+}

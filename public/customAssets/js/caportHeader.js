@@ -5,9 +5,16 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/plugins/jquery/jquery.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/jquery/jquery-migrate.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/bootstrap/js/bootstrap.min.js');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
-    jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
+    // jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+    jsList.push(config.commonUIUrl + '/customAssets/js/languageManager.js');
+
+
+
     jsList.push(config.commonUIUrl + '/assets/plugins/back-to-top.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/smoothScroll.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js');
@@ -88,20 +95,23 @@ function initScriptLoad(){
 
 
 if(lockScriptLoad){
-    console.log("FOTER ARE LOADING SCRIPT");
+    console.log("FOTER ARE LOADING SCRIPT SO WAIT");
     addEventListener('headerCanLoadScript', function (e) {
-        console.log("FOTER ARE END LOADING SCRIPT SO HEADER LOAD");
+        console.log("FOTER ARE END LOADING SCRIPT SO HEADER CAN LOAD");
         lockScriptLoad=true;
         initScriptLoad();
     }, false);
 
 }else{
-    console.log("NO LOADING SCRIPT LOCK");
+    console.log("NO  FOOTER LOADING SCRIPT LOCK");
     lockScriptLoad=true;
     initScriptLoad();
 }
 
-
+// if(translation){
+//     i18next.
+//
+// }
 
 
 

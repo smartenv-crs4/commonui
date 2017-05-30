@@ -94,7 +94,7 @@
     <script>
         var config=JSON.parse('<%- JSON.stringify(properties) %>');
         console.log(config);
-        var lockScriptLoad=false;
+        var lockScriptLoad= lockScriptLoad || false;
     </script>
 
 </div>

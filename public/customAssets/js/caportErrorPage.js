@@ -7,9 +7,14 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/plugins/bootstrap/js/bootstrap.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/back-to-top.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/backstretch/jquery.backstretch.min.js');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
-    jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
+    // jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+    jsList.push(config.commonUIUrl + '/customAssets/js/languageManager.js');
+
+
     jsList.push(config.commonUIUrl + '/assets/js/app.js');
     jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
     jsList.push(config.commonUIUrl + '/assets/js/plugins/style-switcher.js');
@@ -66,11 +71,10 @@ function initScriptLoad(){
             };
             document.body.appendChild(tmpScript);
         }, function (err) { // all script are loaded then init module
-            lockScriptLoad=false;
-            console.log("NOW hEADER CAN LOAD");
-            var event = new Event('headerCanLoadScript');
-            dispatchEvent(event);
-
+            // lockScriptLoad=false;
+            // console.log("NOW hEADER CAN LOAD");
+            // var event = new Event('headerCanLoadScript');
+            // dispatchEvent(event);
             initErrorPage();
         });
     };
@@ -79,20 +83,20 @@ function initScriptLoad(){
 }
 
 
-if(lockScriptLoad){
-    console.log("HEADR ARE LOADING SCRIPT so WAIT");
-    addEventListener('footerCanLoadScript', function (e) {
-        console.log("HEADER ARE END LOADING SCRIPT SO FOOTER LOAD");
-            lockScriptLoad=true;
-            initScriptLoad();
-    }, false);
+// if(lockScriptLoad){
+//     addEventListener('footerCanLoadScript', function (e) {
+//             console.log("Error Page Can Load");
+//             lockScriptLoad=true;
+//             initScriptLoad();
+//     }, false);
+//
+// }else{
+//     console.log("Error Page Load");
+//     lockScriptLoad=true;
+//     initScriptLoad();
+// }
 
-}else{
-    console.log("NO LOADING SCRIPT LOCK");
-    lockScriptLoad=true;
-    initScriptLoad();
-}
-
+initScriptLoad();
 
 
 

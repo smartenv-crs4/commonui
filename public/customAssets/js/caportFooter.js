@@ -6,9 +6,14 @@ function createScriptList(){
     jsList.push(config.commonUIUrl + '/assets/plugins/jquery/jquery-migrate.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/bootstrap/js/bootstrap.min.js');
     jsList.push(config.commonUIUrl + '/assets/plugins/back-to-top.js');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
-    jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
-    jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/i18next.min.js');
+    // jsList.push(config.commonUIUrl + '/customAssets/translations/commonUITranslation.json');
+    // jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
+
+    jsList.push(config.commonUIUrl + '/customAssets/js/languageManager.js');
+
     jsList.push(config.commonUIUrl + '/assets/js/app.js');
     jsList.push(config.commonUIUrl + '/customAssets/js/caportCustom.js');
     return jsList;
@@ -88,13 +93,13 @@ function initScriptLoad(){
 if(lockScriptLoad){
     console.log("HEADR ARE LOADING SCRIPT so WAIT");
     addEventListener('footerCanLoadScript', function (e) {
-        console.log("HEADER ARE END LOADING SCRIPT SO FOOTER LOAD");
+        console.log("HEADER ARE END LOADING SCRIPT SO FOOTER CAN LOAD");
             lockScriptLoad=true;
             initScriptLoad();
     }, false);
 
 }else{
-    console.log("NO LOADING SCRIPT LOCK");
+    console.log("NO LOADING SCRIPT LOCK So FOOTER LOAD");
     lockScriptLoad=true;
     initScriptLoad();
 }
