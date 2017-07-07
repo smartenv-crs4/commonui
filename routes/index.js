@@ -51,7 +51,7 @@ function renderHeader(req,callback){
         pageFaq : (req.query && req.query.pageFaq) || ((properties.pageFaq.length>0) && properties.pageFaq ) || null,
         logout : (req.query && req.query.logout) || null,
         login : (req.query && req.query.login) || null,
-        loginHomeRedirect: (req.query && req.query.loginHomeRedirect) || null,
+        loginHomeRedirect: (req.query && req.query.loginHomeRedirect) || "null",
         afterLoginRedirectTo:(req.query && req.query.afterLoginRedirectTo) || null,
         isLogged : false,
         userProfilePage : null,
@@ -60,6 +60,7 @@ function renderHeader(req,callback){
         username:null
     };
 
+    console.log(renderVar);
 
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
 

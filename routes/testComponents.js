@@ -33,7 +33,8 @@ router.get('/testFooter', function(req, res) {
 
 router.get('/testHeaderFooter', function(req, res) {
 
-    request.get(properties.commonUIUrl+"/headerAndFooter", function (error, response, body) {
+    var loginHomeRedirect=(req.query && req.query.loginHomeRedirect) || null;
+    request.get(properties.commonUIUrl+"/headerAndFooter?loginHomeRedirect="+loginHomeRedirect, function (error, response, body) {
         if(error)console.log("ERRR " + error);
         console.log(body);
         body=JSON.parse(body);
