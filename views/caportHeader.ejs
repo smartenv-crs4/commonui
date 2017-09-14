@@ -38,9 +38,9 @@
                         <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
                     <%}else{%>
                         <%if(customizations.afterLoginRedirectTo){%>
-                            <li id="h_login"><a href="<%= properties.userUIUrl %>?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>" data-i18n="nav.login"></a></li>
+                            <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>" data-i18n="nav.login"></a></li>
                         <% } else{ %>
-                            <li id="h_login"><a href="<%= properties.userUIUrl %>?homeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                            <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
                         <%}%>
                     <%}%>
                 <% }%>
