@@ -108,6 +108,13 @@ if(lockScriptLoad){
     initScriptLoad();
 }
 
+
+function defaultLoginRedirect(homeredirect){
+    window.location.href=homeredirect+window.location.href;
+}
+
+
+
 // if(translation){
 //     i18next.
 //

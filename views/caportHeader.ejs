@@ -40,11 +40,14 @@
                         <%if(customizations.afterLoginRedirectTo){%>
                             <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>" data-i18n="nav.login"></a></li>
                         <% } else{ %>
-                            <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                            <%if(customizations.defaultRedirectToCurrentPage){%>
+                                <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=')" data-i18n="nav.login"></a></li>
+                            <% } else{ %>
+                                    <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                            <%}%>
                         <%}%>
-                    <%}%>
+                    <% }%>
                 <% }%>
-
             </ul>
         </div>
         <!-- End Topbar -->

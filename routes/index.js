@@ -53,6 +53,7 @@ function renderHeader(req,callback){
         login : (req.query && req.query.login) || null,
         loginHomeRedirect: (req.query && req.query.loginHomeRedirect) || "null",
         afterLoginRedirectTo:(req.query && req.query.afterLoginRedirectTo) || null,
+        defaultRedirectToCurrentPage:(req.query && req.query.defaultRedirectToCurrentPage) || null,
         isLogged : false,
         userProfilePage : null,
         whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) || null,
