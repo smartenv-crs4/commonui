@@ -34,19 +34,19 @@
                     <li id="h_logout"><a href="#" onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
                     <li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>
                 <% } else{ %>
-                    <%if(customizations.login){%>
-                        <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
-                    <%}else{%>
-                        <%if(customizations.afterLoginRedirectTo){%>
-                            <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>" data-i18n="nav.login"></a></li>
-                        <% } else{ %>
-                            <%if(customizations.defaultRedirectToCurrentPage){%>
-                                <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=')" data-i18n="nav.login"></a></li>
+                        <%if(customizations.login){%>
+                            <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
+                        <%}else{%>
+                            <%if(customizations.afterLoginRedirectTo){%>
+                                <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>" data-i18n="nav.login"></a></li>
                             <% } else{ %>
+                                <%if(customizations.defaultRedirectToCurrentPage){%>
+                                    <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=')" data-i18n="nav.login"></a></li>
+                                <% } else{ %>
                                     <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                                <%}%>
                             <%}%>
                         <%}%>
-                    <% }%>
                 <% }%>
             </ul>
         </div>
