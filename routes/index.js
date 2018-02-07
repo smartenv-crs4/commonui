@@ -110,7 +110,7 @@ function renderHeader(req,callback){
 
                 if(response.statusCode==200) {
                     renderVar.username=bodyJson.email;
-                    renderVar.userProfilePage=properties.userUIUrl+ "?access_token=" + req.UserToken.access_token;
+                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token;
 
                     console.log("################################################## is Logged true ");
                     console.log(renderVar);
