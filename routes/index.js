@@ -48,6 +48,7 @@ function renderHeader(req,callback){
 
     var renderVar= {
         homePage : (req.query && req.query.homePage) || properties.defaultHomeRedirect,
+        favourite: (req.query && req.query.favourite) || null,
         pageFaq : (req.query && req.query.pageFaq) || ((properties.pageFaq.length>0) && properties.pageFaq ) || null,
         logout : (req.query && req.query.logout) || null,
         login : (req.query && req.query.login) || null,
@@ -60,8 +61,6 @@ function renderHeader(req,callback){
         FastSearchUrl : (req.query && req.query.FastSearchUrl) || true,
         username:null
     };
-
-    console.log(renderVar);
 
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
 
@@ -106,6 +105,7 @@ function renderHeader(req,callback){
             };
 
             request.get(rqparams, function (error, response, body) {
+
                 var bodyJson=JSON.parse(body);
 
                 if(response.statusCode==200) {

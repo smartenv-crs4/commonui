@@ -45,6 +45,10 @@
     "contacts": {
       "en": "Contacts",
       "it": "Contatti"
+    },
+    "favourites":{
+      "en": "My Favourites",
+      "it": "Favorite"
     }
   },
   "error": {

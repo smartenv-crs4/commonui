@@ -34,7 +34,8 @@ router.get('/testFooter', function(req, res) {
 router.get('/testHeaderFooter', function(req, res) {
 
     var loginHomeRedirect=(req.query && req.query.loginHomeRedirect) || null;
-    request.get(properties.commonUIUrl+"/headerAndFooter?loginHomeRedirect="+loginHomeRedirect, function (error, response, body) {
+    var access_token=(req.query && req.query.access_token) || null;
+    request.get(properties.commonUIUrl+"/headerAndFooter?loginHomeRedirect="+loginHomeRedirect+"&access_token="+access_token+"&favourite=http://smartapi.crs4.it/content", function (error, response, body) {
         if(error)console.log("ERRR " + error);
         console.log(body);
         body=JSON.parse(body);

@@ -71,11 +71,23 @@
                         Home
                     </a>
                 </li>
+
+                <% if (customizations.isLogged){ %>
+                    <% if (customizations.favourite){ %>
+                        <li>
+                            <a href="<%= customizations.favourite %>" data-i18n="nav.favourites">
+                                My Favourites
+                            </a>
+                        </li>
+                    <% } %>
+                <% } %>
+
                 <li>
                     <a href="<%= customizations.whoWeAre %>" data-i18n="nav.about">
+                        About
                     </a>
                 </li>
-                </li>
+                <!--</li>-->
                 <% if(customizations.FastSearchUrl) { %>
                     <li>
                         <i class="search fa fa-search search-btn"></i>
