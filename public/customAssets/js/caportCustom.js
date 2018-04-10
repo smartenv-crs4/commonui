@@ -21,14 +21,11 @@ function initTranslation(evenListener){
 
 function initErrorPage(){
 
-
-
-
    initTranslation("errorPageLanguageInitialized");
 
     jQuery(document).ready(function(){
 
-        App.init();
+        initApp();// App.init();
         StyleSwitcher.initStyleSwitcher();
     });
 
@@ -50,7 +47,7 @@ function initFooter(){
     initTranslation("footerLanguageInitialized");
 
     jQuery(document).ready(function(){
-        App.init();
+        initApp();// App.init();
     });
 
 
@@ -73,8 +70,7 @@ function initHeader(){
 
 
     jQuery(document).ready(function(){
-        console.log("Document READY");
-        App.init();
+        initApp(); // App.init();
     });
 
 }
@@ -112,3 +108,5 @@ function initCookieBar()
 
     jQuery("#cookie-bar p").css("color", "#FFFFFF");
 }
+
+

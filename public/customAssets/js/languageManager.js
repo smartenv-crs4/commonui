@@ -5,11 +5,12 @@ var translation= translation || null;
 var i18nlibrariesLoading= i18nlibrariesLoading || false;
 var jqueryi18nlibrariesLoading= jqueryi18nlibrariesLoading || false;
 var asyncLibraryLoading= asyncLibraryLoading || false;
-var asyncLanguageManagerLoading=asyncLanguageManagerLoading || false;
+var i18nInitDone=i18nInitDone || false;
 
 
 
 function setenv(commonUiBaseUrl,evenListener){
+
     async.series([
             function(callback) {
                 if($('script[src*="i18next.min.js"]')[0]) { //18next.min.js lb loaded
@@ -23,6 +24,7 @@ function setenv(commonUiBaseUrl,evenListener){
                     }
 
                 }else{
+                    i18nlibrariesLoading=true;
                     tmpScript=document.createElement("script");
                     tmpScript.type = "text/javascript"; // set the type attribute
                     // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
@@ -35,7 +37,6 @@ function setenv(commonUiBaseUrl,evenListener){
                         callback(null, 'one');
                     };
                     // finally insert the js element to the body element in order to load the script
-                    i18nlibrariesLoading=true;
                     document.body.appendChild(tmpScript);
 
                 }
@@ -55,6 +56,7 @@ function setenv(commonUiBaseUrl,evenListener){
 
 
                 }else{
+                    jqueryi18nlibrariesLoading=true;
                     tmpScript=document.createElement("script");
                     tmpScript.type = "text/javascript"; // set the type attribute
                     // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
@@ -67,7 +69,6 @@ function setenv(commonUiBaseUrl,evenListener){
                         callback(null, 'two');
                     };
                     // finally insert the js element to the body element in order to load the script
-                    jqueryi18nlibrariesLoading=true;
                     document.body.appendChild(tmpScript);
 
                 }
@@ -77,97 +78,103 @@ function setenv(commonUiBaseUrl,evenListener){
 
         function(err, results) { // libs are loaded so Init Language Manager
 
-            console.log("Library i18n initialized");
-            i18next.init({
-                lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-                fallbackLng: "en",
-                resources:  translation
-            }, function (err, t) {
-                jqueryI18next.init(i18next, jQuery,
-                    {
-                        tName: 't', // --> appends $.t = i18next.t
-                        i18nName: 'i18n', // --> appends $.i18n = i18next
-                        handleName: 'localize', // --> appends $(selector).localize(opts);
-                        selectorAttr: 'data-i18n', // selector for translating elements
-                        targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
-                        optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
-                        useOptionsAttr: false, // see optionsAttr
-                        parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
-                    });
 
-
-                console.log("@@@@@@@@@@@@@@@@@@@@@@@@ " + evenListener + " Throw @@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-
+            if(i18nInitDone){
+                console.log("^^^^^^^^^^^^^Library i18n Updated");
+                $.each( translation, function( lng, translationLanguage ) {
+                    i18next.addResourceBundle(lng,"translation",translationLanguage.translation,true,false);
+                });
                 var event = new Event(evenListener);
                 dispatchEvent(event);
 
-                jQuery(document).ready(function(){
-
-                    console.log("Language " + localStorage.lng);
-
-                    if(localStorage.lng) // if a language is set in a previous page
-                    {
-                        console.log("language SET");
-                        var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
-                        if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
+            }else{
+                i18nInitDone=true;
+                console.log("^^^^^^^^^^^^Library i18n initialized");
+                i18next.init({
+                    lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
+                    fallbackLng: "en",
+                    resources:  translation
+                }, function (err, t) {
+                    jqueryI18next.init(i18next, jQuery,
                         {
-                            if(localStorage.lng != jQuery(".languages .active a").first().attr("data-lng")) // if current language != set language then translate and change language
+                            tName: 't', // --> appends $.t = i18next.t
+                            i18nName: 'i18n', // --> appends $.i18n = i18next
+                            handleName: 'localize', // --> appends $(selector).localize(opts);
+                            selectorAttr: 'data-i18n', // selector for translating elements
+                            targetAttr: 'i18n-target', // data-() attribute to grab target element to translate (if diffrent then itself)
+                            optionsAttr: 'i18n-options', // data-() attribute that contains options, will load/set if useOptionsAttr = true
+                            useOptionsAttr: false, // see optionsAttr
+                            parseDefaultValueFromContent: true // parses default values from content ele.val or ele.text
+                        });
+
+
+                    console.log("@@@@@@@@@@@@@@@@@@@@@@@@ " + evenListener + " Throw event");
+
+                    var event = new Event(evenListener);
+                    dispatchEvent(event);
+
+                    jQuery(document).ready(function(){
+
+                        console.log("Language " + localStorage.lng);
+
+                        if(localStorage.lng) // if a language is set in a previous page
+                        {
+                            console.log("language SET");
+                            var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
+                            if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
                             {
-                                var lngSel = jQuery(".languages .active").first()
-                                lngSel.empty();
-                                lngSel.append(l[0].cloneNode(true));
-                                var c = document.createElement("i");
-                                c.className = "fa fa-check";
-                                lngSel.find("a").first().append(c);
+                                if(localStorage.lng != jQuery(".languages .active a").first().attr("data-lng")) // if current language != set language then translate and change language
+                                {
+                                    var lngSel = jQuery(".languages .active").first();
+                                    lngSel.empty();
+                                    lngSel.append(l[0].cloneNode(true));
+                                    var c = document.createElement("i");
+                                    c.className = "fa fa-check";
+                                    lngSel.find("a").first().append(c);
+                                }
+                                i18next.changeLanguage(localStorage.lng, function(){});
+                                console.log("localize");
+                                jQuery('body').localize();
+                            }else{// language selector not exixst
+                                localStorage.lng = jQuery(".languages .active a").first().data("lng");
+                                i18next.changeLanguage(localStorage.lng, function(){});
+                                console.log("localize No language set");
+                                jQuery('body').localize();
                             }
-                            i18next.changeLanguage(localStorage.lng, function(){});
-                            console.log("localize");
-                            jQuery('body').localize();
-                        }else{// language selector not exixst
+                        }
+                        else  //if not a language is set
+                        {
+                            console.log("language Not SET");
+                            //get default language and set it
                             localStorage.lng = jQuery(".languages .active a").first().data("lng");
                             i18next.changeLanguage(localStorage.lng, function(){});
                             console.log("localize No language set");
                             jQuery('body').localize();
                         }
-                    }
-                    else  //if not a language is set
-                    {
-                        console.log("language Not SET");
-                        //get default language and set it
-                        localStorage.lng = jQuery(".languages .active a").first().data("lng");
-                        i18next.changeLanguage(localStorage.lng, function(){});
-                        console.log("localize No language set");
-                        jQuery('body').localize();
-                    }
 
-                    // on click on language drop down set the language
-                    jQuery(".languages a").click(function(){
+                        // on click on language drop down set the language
+                        jQuery(".languages a").click(function(){
 
-                        if(jQuery(this).attr("data-lng"))
-                        {
+                            if(jQuery(this).attr("data-lng"))
+                            {
 
-                            localStorage.lng = jQuery(this).attr("data-lng");
-                            var lngSel = jQuery(".languages .active").first();
-                            lngSel.empty();
-                            lngSel.append(this.cloneNode(true));
-                            var c = document.createElement("i");
-                            c.className = "fa fa-check";
-                            lngSel.find("a").first().append(c);
-                            i18next.changeLanguage(localStorage.lng, function(){});
-                            jQuery('body').localize();
-                            jQuery(document).trigger('translate');
-                            console.log("commonUi Cahange Language " + localStorage.lng);
-                        }
+                                localStorage.lng = jQuery(this).attr("data-lng");
+                                var lngSel = jQuery(".languages .active").first();
+                                lngSel.empty();
+                                lngSel.append(this.cloneNode(true));
+                                var c = document.createElement("i");
+                                c.className = "fa fa-check";
+                                lngSel.find("a").first().append(c);
+                                i18next.changeLanguage(localStorage.lng, function(){});
+                                jQuery('body').localize();
+                                jQuery(document).trigger('translate');
+                                console.log("commonUi Cahange Language " + localStorage.lng);
+                            }
+                        });
                     });
 
-
-
-
                 });
-
-
-
-            });
+            }
         }
     );
 
@@ -176,6 +183,7 @@ function setenv(commonUiBaseUrl,evenListener){
 
 
 function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
+
 
 
     if(!commonUiBaseUrl){
@@ -202,25 +210,26 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
         });
     });
 
+    console.log("Dizionario Grezzo");
+    console.log(jsondictionary);
     console.log("Dizionario");
     console.log(translation);
-    var tmpScript;
 
-    if($('script[src*="async.min.js"]')[0] &&(asyncLanguageManagerLoading)){ //async lib loaded
-        if(asyncLibraryLoading){
+
+    if($('script[src*="async.min.js"]')[0]) { //async lib loaded
+        if(asyncLibraryLoading ){
             console.log("Wait to async loading done");_
             addEventListener('asyncLoaded', function (e) {
                 console.log("Async Lib end so its loaded");
                 setenv(commonUiBaseUrl,evenListener);
             }, false);
         }else{
-
             console.log("Async Lib already loaded " + asyncLibraryLoading);
             setenv(commonUiBaseUrl,evenListener);
         }
 
-    }else{ // no async lib
-        asyncLanguageManagerLoading=true;
+    }else{
+        asyncLibraryLoading=true;
         var tmpScript=document.createElement("script");
         tmpScript.type = "text/javascript"; // set the type attribute
         // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
@@ -233,12 +242,10 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
             setenv(commonUiBaseUrl,evenListener);
         };
         // finally insert the js element to the body element in order to load the script
-
-        asyncLibraryLoading=true;
         console.log("Loading Async");
         document.body.appendChild(tmpScript);
-
     }
+
 
 }
 

@@ -12,6 +12,7 @@ function createScriptList(){
     // jsList.push(config.commonUIUrl + '/assets/js/plugins/jquery-i18next.min.js');
 
     jsList.push(config.commonUIUrl + '/customAssets/js/languageManager.js');
+    jsList.push(config.commonUIUrl + '/customAssets/js/templateManager.js');
 
 
 
