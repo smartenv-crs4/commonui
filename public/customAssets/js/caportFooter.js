@@ -68,6 +68,8 @@ function initScriptLoad(){
     tmpScript.type = "text/javascript"; // set the type attribute
     tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
     tmpScript.onload = function () { // when async  is loaded, load all other script
+        var asyncEvent=new Event("asyncLoaded");
+        dispatchEvent(asyncEvent);
         async.forEachOfSeries(javascriptScripts, function (value, index, callback) {
             tmpScript=document.createElement("script");
             tmpScript.type = "text/javascript";// set the type attribute

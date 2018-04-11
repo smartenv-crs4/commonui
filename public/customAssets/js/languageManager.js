@@ -217,15 +217,30 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
 
 
     if($('script[src*="async.min.js"]')[0]) { //async lib loaded
+
         if(asyncLibraryLoading ){
-            console.log("Wait to async loading done");_
+            console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°Wait to async loading done");
             addEventListener('asyncLoaded', function (e) {
-                console.log("Async Lib end so its loaded");
+                console.log("1. Async Lib end so its loaded");
                 setenv(commonUiBaseUrl,evenListener);
             }, false);
         }else{
-            console.log("Async Lib already loaded " + asyncLibraryLoading);
-            setenv(commonUiBaseUrl,evenListener);
+            if(window.async===undefined){
+                console.log("|||||||||||||||||||||ASUNC UNDEF||||||||||||||||||||||||||||||||||||||||||");
+                var initEnv=false;
+                addEventListener('asyncLoaded', function (e) {
+                    if(!initEnv) {
+                        initEnv=true;
+                        console.log("2. Async Lib end so its loaded");
+                        setenv(commonUiBaseUrl, evenListener);
+                    }
+                }, false);
+                console.log("########Wait to async to be load");
+            }else {
+                console.log("|||||||||||||||||||||ASUNC NOT UNDEF||||||||||||||||||||||||||||||||||||||||||");
+                console.log("3. Async Lib already loaded " + asyncLibraryLoading);
+                setenv(commonUiBaseUrl, evenListener);
+            }
         }
 
     }else{
@@ -242,7 +257,7 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
             setenv(commonUiBaseUrl,evenListener);
         };
         // finally insert the js element to the body element in order to load the script
-        console.log("Loading Async");
+        console.log("@@@@@@@ Loading Async");
         document.body.appendChild(tmpScript);
     }
 
