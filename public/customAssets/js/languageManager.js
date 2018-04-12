@@ -14,7 +14,6 @@ function setenv(commonUiBaseUrl,evenListener){
     async.series([
             function(callback) {
                 if($('script[src*="i18next.min.js"]')[0]) { //18next.min.js lb loaded
-                    console.log("------------> i18next.min.js already loaded");
                     if(i18nlibrariesLoading){
                         addEventListener('i18next', function (e) {
                             callback(null, 'one');
@@ -30,7 +29,6 @@ function setenv(commonUiBaseUrl,evenListener){
                     // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
                     tmpScript.src = commonUiBaseUrl + "/assets/js/plugins/i18next.min.js"; // make the script element load file
                     tmpScript.onload = function () { // when async  is loaded, load all other script
-                        console.log("------------> i18next.min.js loaded");
                         var event = new Event('i18next');
                         dispatchEvent(event);
                         i18nlibrariesLoading=false;
@@ -44,7 +42,6 @@ function setenv(commonUiBaseUrl,evenListener){
             },
             function(callback) {
                 if($('script[src*="jquery-i18next.min.js"]')[0]) { //jquery-i18next.min.js lb loaded
-                    console.log("------------> jquery-i18next.min.js already loaded");
 
                     if(jqueryi18nlibrariesLoading){
                         addEventListener('jquery-i18next', function (e) {
@@ -62,7 +59,6 @@ function setenv(commonUiBaseUrl,evenListener){
                     // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
                     tmpScript.src = commonUiBaseUrl + "/assets/js/plugins/jquery-i18next.min.js"; // make the script element load file
                     tmpScript.onload = function () { // when async  is loaded, load all other script
-                        console.log("------------> jquery-i18next.min.js loaded");
                         var event = new Event('jquery-i18next');
                         jqueryi18nlibrariesLoading=false;
                         dispatchEvent(event);
@@ -80,17 +76,15 @@ function setenv(commonUiBaseUrl,evenListener){
 
 
             if(i18nInitDone){
-                console.log("^^^^^^^^^^^^^Library i18n Updated");
                 $.each( translation, function( lng, translationLanguage ) {
                     i18next.addResourceBundle(lng,"translation",translationLanguage.translation,true,false);
                 });
-                jQuery('body').localize();
+                // jQuery('body').localize();
                 var event = new Event(evenListener);
                 dispatchEvent(event);
 
             }else{
                 i18nInitDone=true;
-                console.log("^^^^^^^^^^^^Library i18n initialized");
                 i18next.init({
                     lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
                     fallbackLng: "en",
@@ -109,18 +103,14 @@ function setenv(commonUiBaseUrl,evenListener){
                         });
 
 
-                    console.log("@@@@@@@@@@@@@@@@@@@@@@@@ " + evenListener + " Throw event");
-
                     var event = new Event(evenListener);
                     dispatchEvent(event);
 
                     jQuery(document).ready(function(){
 
-                        console.log("Language " + localStorage.lng);
 
-                        if(localStorage.lng) // if a language is set in a previous page
-                        {
-                            console.log("language SET");
+                        if(localStorage.lng) {  // if a language is set in a previous page
+
                             var l = jQuery(".languages a[data-lng='" + localStorage.lng +"']"); // get language arrays
                             if(l.length > 0)  // check if a language array exist(not all pages have a language drop down menu)
                             {
@@ -134,30 +124,25 @@ function setenv(commonUiBaseUrl,evenListener){
                                     lngSel.find("a").first().append(c);
                                 }
                                 i18next.changeLanguage(localStorage.lng, function(){});
-                                console.log("localize");
                                 jQuery('body').localize();
                             }else{// language selector not exixst
                                 localStorage.lng = jQuery(".languages .active a").first().data("lng");
                                 i18next.changeLanguage(localStorage.lng, function(){});
-                                console.log("localize No language set");
                                 jQuery('body').localize();
                             }
                         }
                         else  //if not a language is set
                         {
-                            console.log("language Not SET");
                             //get default language and set it
                             localStorage.lng = jQuery(".languages .active a").first().data("lng");
                             i18next.changeLanguage(localStorage.lng, function(){});
-                            console.log("localize No language set");
                             jQuery('body').localize();
                         }
 
                         // on click on language drop down set the language
                         jQuery(".languages a").click(function(){
 
-                            if(jQuery(this).attr("data-lng"))
-                            {
+                            if(jQuery(this).attr("data-lng")){
 
                                 localStorage.lng = jQuery(this).attr("data-lng");
                                 var lngSel = jQuery(".languages .active").first();
@@ -169,7 +154,6 @@ function setenv(commonUiBaseUrl,evenListener){
                                 i18next.changeLanguage(localStorage.lng, function(){});
                                 jQuery('body').localize();
                                 jQuery(document).trigger('translate');
-                                console.log("commonUi Cahange Language " + localStorage.lng);
                             }
                         });
                     });
@@ -190,13 +174,11 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
     if(!commonUiBaseUrl){
         commonUiBaseUrl=$('script[src*="/customAssets/js/languageManager.js"]')[0].src;
         commonUiBaseUrl=commonUiBaseUrl.slice(0,commonUiBaseUrl.indexOf("/customAssets/js/languageManager.js"));
-        console.log("############### " + commonUiBaseUrl);
     }
 
 
     if(!translation){
         translation={};
-        console.log("No translations");
     }
 
     $.each( jsondictionary, function( categoryMessageKey, categoryMessageValue ) {
@@ -206,40 +188,32 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
                 translation[language]["translation"]=translation[language]["translation"]||{};
                 translation[language]["translation"][categoryMessageKey]=translation[language]["translation"][categoryMessageKey]||{};
                 translation[language]["translation"][categoryMessageKey][translationKey]=currentTranslation;
-                // console.log("translation["+language+"][translation]["+categoryMessageKey+"]["+translationKey+"]="+currentTranslation);
             });
         });
     });
 
-    console.log("Dizionario Grezzo");
-    console.log(jsondictionary);
-    console.log("Dizionario");
-    console.log(translation);
+    // console.log("Dizionario Grezzo");
+    // console.log(jsondictionary);
+    // console.log("Dizionario");
+    // console.log(translation);
 
 
     if($('script[src*="async.min.js"]')[0]) { //async lib loaded
 
         if(asyncLibraryLoading ){
-            console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°Wait to async loading done");
             addEventListener('asyncLoaded', function (e) {
-                console.log("1. Async Lib end so its loaded");
                 setenv(commonUiBaseUrl,evenListener);
             }, false);
         }else{
             if(window.async===undefined){
-                console.log("|||||||||||||||||||||ASUNC UNDEF||||||||||||||||||||||||||||||||||||||||||");
                 var initEnv=false;
                 addEventListener('asyncLoaded', function (e) {
                     if(!initEnv) {
                         initEnv=true;
-                        console.log("2. Async Lib end so its loaded");
                         setenv(commonUiBaseUrl, evenListener);
                     }
                 }, false);
-                console.log("########Wait to async to be load");
             }else {
-                console.log("|||||||||||||||||||||ASUNC NOT UNDEF||||||||||||||||||||||||||||||||||||||||||");
-                console.log("3. Async Lib already loaded " + asyncLibraryLoading);
                 setenv(commonUiBaseUrl, evenListener);
             }
         }
@@ -251,14 +225,12 @@ function initDictionary(jsondictionary,commonUiBaseUrl,evenListener){
         // tmpScript.src = config.commonUIUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
         tmpScript.src = commonUiBaseUrl + "/node_modules/async/dist/async.min.js"; // make the script element load file
         tmpScript.onload = function () { // when async  is loaded, load all other script
-            console.log("async loading done");
             asyncLibraryLoading=false;
             var event = new Event('asyncLoaded');
             dispatchEvent(event);
             setenv(commonUiBaseUrl,evenListener);
         };
         // finally insert the js element to the body element in order to load the script
-        console.log("@@@@@@@ Loading Async");
         document.body.appendChild(tmpScript);
     }
 
