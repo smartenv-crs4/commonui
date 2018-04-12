@@ -109,8 +109,12 @@ function renderHeader(req,callback){
                 var bodyJson=JSON.parse(body);
 
                 if(response.statusCode==200) {
+
+
+                    var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || "null";
+
                     renderVar.username=bodyJson.email;
-                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token;
+                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token + "&logout=" + userUiLogoutRedirect ;
 
                     console.log("################################################## is Logged true ");
                     console.log(renderVar);

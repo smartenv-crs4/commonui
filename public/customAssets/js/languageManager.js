@@ -1,5 +1,3 @@
-//var async=require('async');
-
 
 var translation= translation || null;
 var i18nlibrariesLoading= i18nlibrariesLoading || false;
@@ -79,7 +77,7 @@ function setenv(commonUiBaseUrl,evenListener){
                 $.each( translation, function( lng, translationLanguage ) {
                     i18next.addResourceBundle(lng,"translation",translationLanguage.translation,true,false);
                 });
-                // jQuery('body').localize();
+                jQuery('body').localize();
                 var event = new Event(evenListener);
                 dispatchEvent(event);
 

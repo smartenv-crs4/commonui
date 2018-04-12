@@ -49,8 +49,9 @@
                 <%}%>
 
                 <% if (customizations.isLogged) { %>
-                    <li id="h_logout"><a href="#" onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
-                    <li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>
+                    <li id="h_logout"><a onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
+                    <!--<li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>-->
+                    <li style="padding-left:20px" id="h_user"><a onclick="redirectToUserProfile('<%= customizations.userProfilePage %>')"><strong><%= customizations.username %></strong></a></li>
                 <% } else{ %>
                         <%if(customizations.login){%>
                             <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>

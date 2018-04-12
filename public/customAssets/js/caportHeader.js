@@ -115,6 +115,13 @@ function defaultLoginRedirect(homeredirect){
 }
 
 
+function redirectToUserProfile(userProfileLink){
+    // console.log(userProfileLink);
+    //window.location.href="http://localhost:3011";
+    window.location.replace(userProfileLink);
+}
+
+
 
 // if(translation){
 //     i18next.
