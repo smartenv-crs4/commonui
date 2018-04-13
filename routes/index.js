@@ -62,6 +62,9 @@ function renderHeader(req,callback){
         username:null
     };
 
+
+
+
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
 
         ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
@@ -114,10 +117,11 @@ function renderHeader(req,callback){
                     var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || "null";
 
                     renderVar.username=bodyJson.email;
-                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token + "&logout=" + userUiLogoutRedirect ;
+                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token + "&logout=" + userUiLogoutRedirect + "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect;
 
                     console.log("################################################## is Logged true ");
                     console.log(renderVar);
+
 
                     ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
                         if(err){
