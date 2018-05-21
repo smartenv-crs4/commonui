@@ -111,6 +111,7 @@ if(lockScriptLoad){
 
 
 function defaultLoginRedirect(homeredirect){
+    // console.log(homeredirect+window.location.href+"&afterLoginRedirectTo=" + window.location.href);
     window.location.href=homeredirect+window.location.href;
 }
 
