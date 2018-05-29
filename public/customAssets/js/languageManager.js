@@ -85,7 +85,7 @@ function setenv(commonUiBaseUrl,evenListener){
                 i18nInitDone=true;
                 i18next.init({
                     lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-                    fallbackLng: "en",
+                    fallbackLng: ["en","it"],
                     resources:  translation
                 }, function (err, t) {
                     jqueryI18next.init(i18next, jQuery,
@@ -321,7 +321,7 @@ function setenvironment(commonUiBaseUrl,callbackWhenDone){
                 i18nInitDone=true;
                 i18next.init({
                     lng: localStorage.lng, // evtl. use language-detector https://github.com/i18next/i18next-browser-languageDetector
-                    fallbackLng: "en",
+                    fallbackLng: ["en","it"],
                     resources:  translation
                 }, function (err, t) {
                     jqueryI18next.init(i18next, jQuery,
