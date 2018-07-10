@@ -52,20 +52,53 @@ function renderHeader(req,callback){
         pageFaq : (req.query && req.query.pageFaq) || ((properties.pageFaq.length>0) && properties.pageFaq ) || null,
         logout : (req.query && req.query.logout) || null,
         login : (req.query && req.query.login) || null,
-        loginHomeRedirect: (req.query && req.query.loginHomeRedirect) || "null",
+        loginHomeRedirect: (req.query && req.query.loginHomeRedirect) || null,
         afterLoginRedirectTo:(req.query && req.query.afterLoginRedirectTo) || null,
         defaultRedirectToCurrentPage:(req.query && req.query.defaultRedirectToCurrentPage) || null,
+        enableUserUpgrade : (req.query && req.query.enableUserUpgrade) || null,
+        applicationSettings:(req.query && req.query.applicationSettings) || null,
         isLogged : false,
         userProfilePage : null,
         whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) || null,
-        FastSearchUrl : (req.query && req.query.FastSearchUrl) || true,
-        username:null
+        fastSearchUrl : (req.query && req.query.fastSearchUrl) || false,
+        username:null,
+        resetPasswordSettings:""
     };
+
+
+    // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    // console.log(req.query && JSON.stringify(req.query.applicationSettings));
+
+
+    renderVar.redirectSettings=renderVar.loginHomeRedirect ? "homeRedirect="+ renderVar.loginHomeRedirect +"&loginHomeRedirect="+ renderVar.loginHomeRedirect : "";
+
+
+    if(renderVar.fastSearchUrl){// fast search only for a little user group
+        renderVar.fastSearchUrlIcon=JSON.parse(renderVar.fastSearchUrl).icon;
+        try {
+            var toUser=JSON.parse(renderVar.fastSearchUrl).toUser;
+            if(toUser){
+                if(req.UserToken && req.UserToken.token.type && _.isArray(toUser)){
+                    if(!(toUser.indexOf(req.UserToken.token.type)>=0))
+                        renderVar.fastSearchUrl=false;
+                }else{
+                    renderVar.fastSearchUrl=false;
+                }
+            }
+
+        }catch (eX) {
+            if(!(renderVar.fastSearchUrl === "true"))
+                 renderVar.fastSearchUrl=false;
+        }
+    }
 
 
 
 
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
+
+        if(renderVar.applicationSettings)
+            renderVar.resetPasswordSettings="&applicationSettings="+renderVar.applicationSettings;
 
         ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
             if(err) {
@@ -114,10 +147,21 @@ function renderHeader(req,callback){
                 if(response.statusCode==200) {
 
 
-                    var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || "null";
+                    var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || null;
 
                     renderVar.username=bodyJson.email;
-                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token + "&logout=" + userUiLogoutRedirect + "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect;
+                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token ;
+                    renderVar.userProfilePage+= userUiLogoutRedirect ? "&logout=" + userUiLogoutRedirect :"";
+                    renderVar.userProfilePage+= renderVar.loginHomeRedirect ? "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect: "";
+                    renderVar.userProfilePage+= renderVar.afterLoginRedirectTo ? "&redirectTo="+renderVar.afterLoginRedirectTo :"";
+                    renderVar.userProfilePage+= renderVar.fastSearchUrl ? "&fastSearchUrl="+renderVar.fastSearchUrl :"";
+
+                    if(renderVar.enableUserUpgrade)
+                        renderVar.userProfilePage+="&enableUserUpgrade="+renderVar.enableUserUpgrade;
+
+                    if(renderVar.applicationSettings)
+                        renderVar.userProfilePage+="&applicationSettings="+renderVar.applicationSettings;
+
 
                     console.log("################################################## is Logged true ");
                     console.log(renderVar);
@@ -222,8 +266,10 @@ function renderPageError(req,callback){
     var error_message=(req.query && req.query.error_message) || "400";
     var defaultHomeRedirect=(req.query && req.query.defaultHomeRedirect) || null;
     var showMore_message=(req.query && req.query.showMore_message) || null;
+    var custom_error_message=(req.query && req.query.custom_error_message) || null;
 
-    var options={error_code:error_code,error_message:error_message,defaultHomeRedirect:defaultHomeRedirect, showMore_message:showMore_message};
+
+    var options={error_code:error_code,error_message:error_message,defaultHomeRedirect:defaultHomeRedirect, showMore_message:showMore_message,custom_error_message:custom_error_message};
 
 
     ejs.renderFile("./views/caportPageError.ejs",{properties:properties,options:options} , null, function(err, str){
@@ -270,7 +316,7 @@ router.get('/errorPage',function(req,res){
 //     // userProfilePage
 //     // username
 //     // whoWeAre
-//     // FastSearchUrl
+//     // fastSearchUrl
 //     //
 //
 //     console.log(req.UserToken);
@@ -283,7 +329,7 @@ router.get('/errorPage',function(req,res){
 //         isLogged : false,
 //         userProfilePage : (req.query && req.query.userProfilePage) || null,
 //         whoWeAre : (req.query && req.query.whoWeAre) || null,
-//         FastSearchUrl : (req.query && req.query.FastSearchUrl) || true
+//         fastSearchUrl : (req.query && req.query.fastSearchUrl) || true
 //     };
 //
 //

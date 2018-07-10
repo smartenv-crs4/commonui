@@ -9,7 +9,11 @@
 					<a class="logo" href="<%=properties.defaultHomeRedirect%>"><img style="width:35%" src="<%=properties.commonUIUrl%>/customAssets/img/port/logo1-default.png" alt="Logo"></a>
 					<h1><%=options.error_code%></h1>
 
-					<span class="sorry" data-i18n="error.<%=options.error_message%>"></span>
+					<% if(options.custom_error_message) {%>
+					<span class="sorry"><%=options.error_message%></span>
+					<%}else{%>
+						<span class="sorry" data-i18n="error.<%=options.error_message%>"></span>
+					<%}%>
 
                     <% if(options.showMore_message) {%>
 						<div class="row">

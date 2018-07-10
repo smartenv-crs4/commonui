@@ -59,6 +59,7 @@ function initScriptLoad(){
     var javascriptScripts=createScriptList();
     var scripts = document.getElementsByTagName("script"); // get all script in page
 
+
 // remove from list, all script already loaded in the page
     for (var i = 0; i < scripts.length; ++i) {
         isLoaded(scripts[i],javascriptScripts);
@@ -84,7 +85,6 @@ function initScriptLoad(){
             document.body.appendChild(tmpScript);
         }, function (err) { // all script are loaded then init module
             lockScriptLoad=false;
-            console.log("NOW FOOTER CAN LOAD");
             var event = new Event('footerCanLoadScript');
             dispatchEvent(event);
             initHeader();
@@ -96,28 +96,23 @@ function initScriptLoad(){
 
 
 if(lockScriptLoad){
-    console.log("FOTER ARE LOADING SCRIPT SO WAIT");
     addEventListener('headerCanLoadScript', function (e) {
-        console.log("FOTER ARE END LOADING SCRIPT SO HEADER CAN LOAD");
         lockScriptLoad=true;
         initScriptLoad();
     }, false);
 
 }else{
-    console.log("NO  FOOTER LOADING SCRIPT LOCK");
     lockScriptLoad=true;
     initScriptLoad();
 }
 
 
 function defaultLoginRedirect(homeredirect){
-    // console.log(homeredirect+window.location.href+"&afterLoginRedirectTo=" + window.location.href);
     window.location.href=homeredirect+window.location.href;
 }
 
 
 function redirectToUserProfile(userProfileLink){
-    // console.log(userProfileLink);
     //window.location.href="http://localhost:3011";
     window.location.replace(userProfileLink);
 }

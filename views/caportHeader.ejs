@@ -57,16 +57,38 @@
                             <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
                         <%}else{%>
                             <%if(customizations.afterLoginRedirectTo){%>
-                                <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                                <li id="h_login"><a href="<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %>&redirectTo=<%= customizations.afterLoginRedirectTo %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>
                             <% } else{ %>
                                 <%if(customizations.defaultRedirectToCurrentPage){%>
-                                    <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=')" data-i18n="nav.login"></a></li>
+                                    <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %><%= customizations.resetPasswordSettings %>&redirectTo=')" data-i18n="nav.login"></a></li>
                                 <% } else{ %>
-                                    <li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %>" data-i18n="nav.login"></a></li>
+                                    <li id="h_login"><a href="<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>
                                 <%}%>
                             <%}%>
                         <%}%>
                 <% }%>
+
+                <!--OLD menubar   -->
+                <!--<% if (customizations.isLogged) { %>-->
+                <!--<li id="h_logout"><a onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>-->
+                <!--&lt;!&ndash;<li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>&ndash;&gt;-->
+                <!--<li style="padding-left:20px" id="h_user"><a onclick="redirectToUserProfile('<%= customizations.userProfilePage %>')"><strong><%= customizations.username %></strong></a></li>-->
+                <!--<% } else{ %>-->
+                <!--<%if(customizations.login){%>-->
+                <!--<li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>-->
+                <!--<%}else{%>-->
+                <!--<%if(customizations.afterLoginRedirectTo){%>-->
+                <!--<li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %>&redirectTo=<%= customizations.afterLoginRedirectTo %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>-->
+                <!--<% } else{ %>-->
+                <!--<%if(customizations.defaultRedirectToCurrentPage){%>-->
+                <!--<li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %><%= customizations.resetPasswordSettings %>&redirectTo=')" data-i18n="nav.login"></a></li>-->
+                <!--<% } else{ %>-->
+                <!--<li id="h_login"><a href="<%= properties.userUIUrl %>/?homeRedirect=<%= customizations.loginHomeRedirect %>&loginHomeRedirect=<%= customizations.loginHomeRedirect %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>-->
+                <!--<%}%>-->
+                <!--<%}%>-->
+                <!--<%}%>-->
+                <!--<% }%>-->
+                <!--end hold-->
             </ul>
         </div>
         <!-- End Topbar -->
@@ -107,19 +129,15 @@
                     </a>
                 </li>
                 <!--</li>-->
-                <% if(customizations.FastSearchUrl) { %>
+                <% if(customizations.fastSearchUrl) { %>
                     <li>
-                        <i class="search fa fa-search search-btn"></i>
+                        <i class="search fa <%= customizations.fastSearchUrlIcon %> search-btn"></i>
                         <div class="search-open">
-                            <div class="input-group animated fadeInDown">
-                                <input type="text" class="form-control" placeholder="" id="smallSearch" >
-                                <span class="input-group-btn">
-                            <!--<button class="btn-u" type="button"  id="smallSearchButton" onclick="<%= customizations.FastSearchUrl %>" + $('#smallSearch').val()" >-->
-                            <button class="btn-u" type="button"  id="smallSearchButton" onclick="<%= customizations.FastSearchUrl %>" >
-                           <i class="fa fa-search"></i>
-                           <span data-i18n="button.search"></span>
-                           </button>
-                        </span>
+                            <div id="userbar" class="editmode">
+                                <div id="adminusers" class="margin-bottom-30">
+                                    <input class="typeahead form-control" type="text" placeholder="Search for user">
+                                </div>
+                                <div id="adminlist"></div>
                             </div>
                         </div>
                     </li>
@@ -140,6 +158,7 @@
     </script>
 
     <!--To add more script populate it in createScriptList function in caportHeader.js-->
+
 
 
 </div>
