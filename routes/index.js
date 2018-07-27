@@ -148,10 +148,12 @@ function renderHeader(req,callback){
 
 
                     var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || null;
+                    var userUiDeleteUserRedirect=(req.query && req.query.userUiDeleteUserRedirect) || null;
 
                     renderVar.username=bodyJson.email;
                     renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token ;
                     renderVar.userProfilePage+= userUiLogoutRedirect ? "&logout=" + userUiLogoutRedirect :"";
+                    renderVar.userProfilePage+= userUiDeleteUserRedirect ? "&userUiDeleteUserRedirect=" + userUiDeleteUserRedirect :"";
                     renderVar.userProfilePage+= renderVar.loginHomeRedirect ? "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect: "";
                     renderVar.userProfilePage+= renderVar.afterLoginRedirectTo ? "&redirectTo="+renderVar.afterLoginRedirectTo :"";
                     renderVar.userProfilePage+= renderVar.fastSearchUrl ? "&fastSearchUrl="+renderVar.fastSearchUrl :"";
