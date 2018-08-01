@@ -142,59 +142,72 @@ function renderHeader(req,callback){
 
             request.get(rqparams, function (error, response, body) {
 
-                var bodyJson=JSON.parse(body);
+                try {
+                    var bodyJson = JSON.parse(body);
 
-                if(response.statusCode==200) {
-
-
-                    var userUiLogoutRedirect=(req.query && req.query.userUiLogoutRedirect) || null;
-                    var userUiDeleteUserRedirect=(req.query && req.query.userUiDeleteUserRedirect) || null;
-
-                    renderVar.username=bodyJson.email;
-                    renderVar.userProfilePage=properties.userUIUrl+ "/?access_token=" + req.UserToken.access_token ;
-                    renderVar.userProfilePage+= userUiLogoutRedirect ? "&logout=" + userUiLogoutRedirect :"";
-                    renderVar.userProfilePage+= userUiDeleteUserRedirect ? "&userUiDeleteUserRedirect=" + userUiDeleteUserRedirect :"";
-                    renderVar.userProfilePage+= renderVar.loginHomeRedirect ? "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect: "";
-                    renderVar.userProfilePage+= renderVar.afterLoginRedirectTo ? "&redirectTo="+renderVar.afterLoginRedirectTo :"";
-                    renderVar.userProfilePage+= renderVar.fastSearchUrl ? "&fastSearchUrl="+renderVar.fastSearchUrl :"";
-
-                    if(renderVar.enableUserUpgrade)
-                        renderVar.userProfilePage+="&enableUserUpgrade="+renderVar.enableUserUpgrade;
-
-                    if(renderVar.applicationSettings)
-                        renderVar.userProfilePage+="&applicationSettings="+renderVar.applicationSettings;
+                    if (response.statusCode == 200) {
 
 
-                    console.log("################################################## is Logged true ");
-                    console.log(renderVar);
+                        var userUiLogoutRedirect = (req.query && req.query.userUiLogoutRedirect) || null;
+                        var userUiDeleteUserRedirect = (req.query && req.query.userUiDeleteUserRedirect) || null;
+
+                        renderVar.username = bodyJson.email;
+                        renderVar.userProfilePage = properties.userUIUrl + "/?access_token=" + req.UserToken.access_token;
+                        renderVar.userProfilePage += userUiLogoutRedirect ? "&logout=" + userUiLogoutRedirect : "";
+                        renderVar.userProfilePage += userUiDeleteUserRedirect ? "&userUiDeleteUserRedirect=" + userUiDeleteUserRedirect : "";
+                        renderVar.userProfilePage += renderVar.loginHomeRedirect ? "&homeRedirect=" + renderVar.loginHomeRedirect + "&loginHomeRedirect=" + renderVar.loginHomeRedirect : "";
+                        renderVar.userProfilePage += renderVar.afterLoginRedirectTo ? "&redirectTo=" + renderVar.afterLoginRedirectTo : "";
+                        renderVar.userProfilePage += renderVar.fastSearchUrl ? "&fastSearchUrl=" + renderVar.fastSearchUrl : "";
+
+                        if (renderVar.enableUserUpgrade)
+                            renderVar.userProfilePage += "&enableUserUpgrade=" + renderVar.enableUserUpgrade;
+
+                        if (renderVar.applicationSettings)
+                            renderVar.userProfilePage += "&applicationSettings=" + renderVar.applicationSettings;
 
 
-                    ejs.renderFile("./views/caportHeader.ejs",{properties: properties, customizations:renderVar} , null, function(err, str){
-                        if(err){
-                            return (callback({
-                                status: 500,
-                                results: {
-                                    error: "Internal Server Error",
-                                    error_message: err
-                                }
-                            }));
-                        }else{
-                            return callback({
-                                status:200,
-                                results:{
-                                    html: str,
-                                    css: properties.commonUIUrl + "/customAssets/css/header_footer.css",
-                                    js: properties.commonUIUrl + "/customAssets/js/caportHeader.js"
-                                }
-                            });
-                        }
-                    });
-                }else{ // user Not found
+                        console.log("################################################## is Logged true ");
+                        console.log(renderVar);
+
+
+                        ejs.renderFile("./views/caportHeader.ejs", {
+                            properties: properties,
+                            customizations: renderVar
+                        }, null, function (err, str) {
+                            if (err) {
+                                return (callback({
+                                    status: 500,
+                                    results: {
+                                        error: "Internal Server Error",
+                                        error_message: err
+                                    }
+                                }));
+                            } else {
+                                return callback({
+                                    status: 200,
+                                    results: {
+                                        html: str,
+                                        css: properties.commonUIUrl + "/customAssets/css/header_footer.css",
+                                        js: properties.commonUIUrl + "/customAssets/js/caportHeader.js"
+                                    }
+                                });
+                            }
+                        });
+                    } else { // user Not found
+                        return (callback({
+                            status: 404,
+                            results: {
+                                error: "Resource Not Found",
+                                error_message: "the owner of this access_token was not found"
+                            }
+                        }));
+                    }
+                }catch (ex) {
                     return (callback({
-                        status: 404,
+                        status: 500,
                         results: {
-                            error: "Resource Not Found",
-                            error_message: "the owner of this access_token was not found"
+                            error: "Internal Server Error",
+                            error_message: "in Get user info by id: " + ex
                         }
                     }));
                 }
