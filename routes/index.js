@@ -199,6 +199,11 @@ function renderHeader(req,callback){
                                 status: 500,
                                 results: bodyJson
                             }));
+                        } else if (response.statusCode == 500) { //Not authorised access_token
+                            return (callback({
+                                status: 500,
+                                results: bodyJson
+                            }));
                         } else {// user Not found
                             return (callback({
                                 status: 404,
