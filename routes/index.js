@@ -193,14 +193,21 @@ function renderHeader(req,callback){
                                 });
                             }
                         });
-                    } else { // user Not found
-                        return (callback({
-                            status: 404,
-                            results: {
-                                error: "Resource Not Found",
-                                error_message: "the owner of this access_token was not found"
-                            }
-                        }));
+                    } else {
+                        if (response.statusCode == 401) { //Not authorised access_token
+                            return (callback({
+                                status: 500,
+                                results: bodyJson
+                            }));
+                        } else {// user Not found
+                            return (callback({
+                                status: 404,
+                                results: {
+                                    error: "Resource Not Found",
+                                    error_message: "The owner of this access_token was not found"
+                                }
+                            }));
+                        }
                     }
                 }catch (ex) {
                     return (callback({
