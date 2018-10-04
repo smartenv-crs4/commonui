@@ -29,10 +29,10 @@
 
                 <li class="hoverSelector">
                     <i class="fa fa-globe"></i>
-                    <a data-i18n="nav.lang"></a>
+                    <a href="#" data-i18n="nav.lang"></a>
                     <ul class="languages hoverSelectorBlock">
                         <li class="active ">
-                            <a class="" data-lng="en" href="#">English <i class="fa fa-check"></i></a>
+                            <a href="#" class="" data-lng="en" href="#">English <i class="fa fa-check"></i></a>
                         </li>
                         <li><a href="#" data-lng="en">English</a></li>
                         <li><a  data-lng="it" href="#">Italiano</a></li>
@@ -49,9 +49,9 @@
                 <%}%>
 
                 <% if (customizations.isLogged) { %>
-                    <li id="h_logout"><a onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
+                    <li id="h_logout"><a href="#" onclick="<%= customizations.logout %>" data-i18n="nav.logout"></a></li>
                     <!--<li style="padding-left:20px" id="h_user"><a href="<%= customizations.userProfilePage %>"><strong><%= customizations.username %></strong></a></li>-->
-                    <li style="padding-left:20px" id="h_user"><a onclick="redirectToUserProfile('<%= customizations.userProfilePage %>')"><strong><%= customizations.username %></strong></a></li>
+                    <li style="padding-left:20px" id="h_user"><a href="#" onclick="redirectToUserProfile('<%= customizations.userProfilePage %>')"><strong><%= customizations.username %></strong></a></li>
                 <% } else{ %>
                         <%if(customizations.login){%>
                             <li id="h_login"><a href="#" onclick="<%= customizations.login %>" data-i18n="nav.login"></a></li>
@@ -60,7 +60,7 @@
                                 <li id="h_login"><a href="<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %>&redirectTo=<%= customizations.afterLoginRedirectTo %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>
                             <% } else{ %>
                                 <%if(customizations.defaultRedirectToCurrentPage){%>
-                                    <li id="h_login"><a id="loginRed" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %><%= customizations.resetPasswordSettings %>&redirectTo=')" data-i18n="nav.login"></a></li>
+                                    <li id="h_login"><a id="loginRed" href="#" onclick="defaultLoginRedirect('<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %><%= customizations.resetPasswordSettings %>&redirectTo=')" data-i18n="nav.login"></a></li>
                                 <% } else{ %>
                                     <li id="h_login"><a href="<%= properties.userUIUrl %>/?<%= customizations.redirectSettings %><%= customizations.resetPasswordSettings %>" data-i18n="nav.login"></a></li>
                                 <%}%>
