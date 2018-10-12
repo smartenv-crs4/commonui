@@ -123,6 +123,19 @@
                     <% } %>
                 <% } %>
 
+
+                <% if (customizations.customMenuItems){ %>
+                    <% customizations.customMenuItems.forEach(function(option){ %>
+                        <li>
+                            <a <%= option.menuAction %> data-i18n="customMenu.<%= option.menuItem %>">
+                                <%= option.menuItem %>
+                            </a>
+                        </li>
+                    <% }); %>
+                <% } %>
+
+
+
                 <li>
                     <a href="<%= customizations.whoWeAre %>" data-i18n="nav.about">
                         About

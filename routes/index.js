@@ -62,12 +62,13 @@ function renderHeader(req,callback){
         whoWeAre : (req.query && req.query.whoWeAre) || ((properties.whoWeAre.length>0) && properties.whoWeAre ) || null,
         fastSearchUrl : (req.query && req.query.fastSearchUrl) || false,
         username:null,
-        resetPasswordSettings:""
+        resetPasswordSettings:"",
+        customMenu:(req.query && req.query.customMenu) || null,
     };
 
 
-    // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-    // console.log(req.query && JSON.stringify(req.query.applicationSettings));
+    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    console.log(renderVar);
 
 
     renderVar.redirectSettings=renderVar.loginHomeRedirect ? "homeRedirect="+ renderVar.loginHomeRedirect +"&loginHomeRedirect="+ renderVar.loginHomeRedirect : "";
@@ -93,6 +94,16 @@ function renderHeader(req,callback){
     }
 
 
+    if(renderVar.customMenu){// processes custom Menu
+
+        var tempcustomMenu=JSON.parse(renderVar.customMenu);
+        renderVar.customMenuItems=[];
+        _.each(tempcustomMenu, function(action, item) {
+            renderVar.customMenuItems.push({menuAction:action,menuItem:item});
+        });
+    }else{
+        renderVar.customMenuItems=null;
+    }
 
 
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
@@ -159,11 +170,19 @@ function renderHeader(req,callback){
                         renderVar.userProfilePage += renderVar.afterLoginRedirectTo ? "&redirectTo=" + renderVar.afterLoginRedirectTo : "";
                         renderVar.userProfilePage += renderVar.fastSearchUrl ? "&fastSearchUrl=" + renderVar.fastSearchUrl : "";
 
+
                         if (renderVar.enableUserUpgrade)
                             renderVar.userProfilePage += "&enableUserUpgrade=" + renderVar.enableUserUpgrade;
 
                         if (renderVar.applicationSettings)
                             renderVar.userProfilePage += "&applicationSettings=" + renderVar.applicationSettings;
+
+                        if (renderVar.customMenu)
+                            renderVar.userProfilePage += "&customMenu=" + renderVar.customMenu;
+
+                        if (renderVar.favourite)
+                            renderVar.userProfilePage += "&favourite=" + renderVar.favourite;
+
 
 
                         console.log("################################################## is Logged true ");
