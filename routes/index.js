@@ -95,16 +95,28 @@ function renderHeader(req,callback){
 
 
     if(renderVar.customMenu){// processes custom Menu
-
         var tempcustomMenu=JSON.parse(renderVar.customMenu);
         renderVar.customMenuItems=[];
+        var toUser;
         _.each(tempcustomMenu, function(action, item) {
-            renderVar.customMenuItems.push({menuAction:action,menuItem:item});
+            try {
+                toUser=action.showOnly;
+                if(toUser){
+                    if(req.UserToken && req.UserToken.token && req.UserToken.token.type && _.isArray(toUser)){
+                        if((toUser.indexOf(req.UserToken.token.type)>=0))
+                            renderVar.customMenuItems.push({menuAction:action.tag,menuItem:item});
+                    }
+                }
+            }catch (eX) {
+                console.log("!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!");
+                console.log("error in creation custom Menù: " + eX);
+                console.log("!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!");
+            }
         });
+
     }else{
         renderVar.customMenuItems=null;
     }
-
 
     if(req.UserToken && req.UserToken.error_code && req.UserToken.error_code=="0") { // no access_token provided return void header
 
