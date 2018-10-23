@@ -67,8 +67,8 @@ function renderHeader(req,callback){
     };
 
 
-    console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-    console.log(renderVar);
+    // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    // console.log(renderVar);
 
 
     renderVar.redirectSettings=renderVar.loginHomeRedirect ? "homeRedirect="+ renderVar.loginHomeRedirect +"&loginHomeRedirect="+ renderVar.loginHomeRedirect : "";
