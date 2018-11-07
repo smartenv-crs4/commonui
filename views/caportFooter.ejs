@@ -42,54 +42,86 @@
                 <div class="col-md-6">
                     <p>
                         2015 &copy; All Rights Reserved.
-                        <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+                        <a href="#" data-toggle="modal" data-target=".bs-privacy-modal-lg" data-i18n="privacy.privacybutton">Privacy Policy</a> | <a href="#" data-toggle="modal" data-target=".bs-terms-modal-lg" data-i18n="privacy.termsbutton">Terms of Service</a>
                     </p>
                 </div>
 
+                <!--todo if nedd social links uncomment-->
                 <!-- Social Links -->
-                <div class="col-md-6">
-                    <ul class="footer-socials list-inline">
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype">
-                                <i class="fa fa-skype"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google Plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Linkedin">
-                                <i class="fa fa-linkedin"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest">
-                                <i class="fa fa-pinterest"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dribbble">
-                                <i class="fa fa-dribbble"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!--<div class="col-md-6">-->
+                    <!--<ul class="footer-socials list-inline">-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Facebook">-->
+                                <!--<i class="fa fa-facebook"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Skype">-->
+                                <!--<i class="fa fa-skype"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Google Plus">-->
+                                <!--<i class="fa fa-google-plus"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Linkedin">-->
+                                <!--<i class="fa fa-linkedin"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Pinterest">-->
+                                <!--<i class="fa fa-pinterest"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Twitter">-->
+                                <!--<i class="fa fa-twitter"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="#" class="tooltips" data-toggle="tooltip" data-placement="top" title="" data-original-title="Dribbble">-->
+                                <!--<i class="fa fa-dribbble"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
                 <!-- End Social Links -->
             </div>
         </div>
     </div><!--/copyright-->
+
+
+    <div class="modal fade bs-privacy-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">X</button>
+                    <h4 id="myLargeModalLabel2" class="modal-title" data-i18n="privacy.privacytitle">Large Modal</h4>
+                </div>
+                <div class="modal-body">
+                    <% include include/privacy.ejs %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-terms-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close" type="button">X</button>
+                    <h4 id="myLargeModalLabel2" class="modal-title" data-i18n="privacy.termstitle">Large Modal</h4>
+                </div>
+                <div class="modal-body">
+                    <% include include/terms.ejs %>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         var config=JSON.parse('<%- JSON.stringify(properties) %>');

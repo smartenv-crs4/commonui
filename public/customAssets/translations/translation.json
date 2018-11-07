@@ -13,6 +13,24 @@
       "it": "Rifiuto"
     }
   },
+  "privacy":{
+      "privacytitle":{
+        "en": "Privacy policy terms",
+        "it": "Informativa sulla privacy"
+      },
+      "termstitle":{
+        "en": "Terms of service",
+        "it": "informativa sui termni di servizio"
+      },
+    "privacybutton":{
+      "en": "Privacy policy",
+      "it": "Politiche di privacy"
+    },
+    "termsbutton":{
+      "en": "Terms of service",
+      "it": "Termni di servizio"
+    }
+  },
   "nav": {
     "home": {
       "en": "Home",
