@@ -75,8 +75,9 @@ function renderHeader(req,callback){
 
 
     if(renderVar.fastSearchUrl){// fast search only for a little user group
-        renderVar.fastSearchUrlIcon=JSON.parse(renderVar.fastSearchUrl).icon;
         try {
+        renderVar.fastSearchUrlIcon=JSON.parse(renderVar.fastSearchUrl).icon;
+
             var toUser=JSON.parse(renderVar.fastSearchUrl).toUser;
             if(toUser){
                 if(req.UserToken && req.UserToken.token.type && _.isArray(toUser)){
