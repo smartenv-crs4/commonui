@@ -13,6 +13,12 @@
       "it": "Rifiuto"
     }
   },
+  "disclaimer": {
+    "header": {
+      "en":"This is a beta release under testing, we are sorry for any inconveniences",
+      "it":"Questo servizio è una versione beta in fase di sperimentazione, ci scusiamo in anticipo per eventuali inconvenienti"
+    }
+  },
   "privacy":{
       "privacytitle":{
         "en": "Privacy policy terms",
@@ -20,7 +26,7 @@
       },
       "termstitle":{
         "en": "Terms of service",
-        "it": "informativa sui termni di servizio"
+        "it": "informativa sui termini di servizio"
       },
     "privacybutton":{
       "en": "Privacy policy",
@@ -28,7 +34,7 @@
     },
     "termsbutton":{
       "en": "Terms of service",
-      "it": "Termni di servizio"
+      "it": "Termini di servizio"
     }
   },
   "nav": {
